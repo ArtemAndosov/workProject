@@ -1,0 +1,3 @@
+/home/artem/workspace/work/build/CMakeFiles/start.dir
+/home/artem/workspace/work/build/CMakeFiles/edit_cache.dir
+/home/artem/workspace/work/build/CMakeFiles/rebuild_cache.dir

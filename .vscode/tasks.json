@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "[Windows] clear & build & run",
+            "type": "shell",
+            "command": "rm -r build;  cmake -S . -B build -G 'MinGW Makefiles';  cmake --build build; build\\start.exe",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Windows docker] clear & build & run",
+            "type": "shell",
+            "command": "docker run -it --rm --name orcs -v C:\\Users\\Кристина\\Documents\\workspace\\orcs:/src/ deb_build:latest bash build_debug.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Arch Linux] clear & build & run",
+            "type": "shell",
+            "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; cmake ..; cmake --build . -- -j8; ./start; fi;",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Arch Linux] clear build",
+            "type": "shell",
+            "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; fi;",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Arch Linux] build debug",
+            "type": "shell",
+            "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; cmake -DCMAKE_BUILD_TYPE=Debug ..; cmake --build . --config Debug -j4; ./unit_test; make coverage; fi;",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Arch Linux] build release",
+            "type": "shell",
+            "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; cmake -DCMAKE_BUILD_TYPE=Release -G Ninja ..; cmake --build . --config Release -j4; ./start; fi;",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Docker] build debug",
+            "type": "shell",
+            "command": "docker run -it --rm --name orcs -v ./:/src/ deb_build:latest bash build_debug.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "[Docker] build release",
+            "type": "shell",
+            "command": "sudo docker run -it --rm --name orcs -v ./:/src/ deb_build:latest bash build_release.sh",
+            "problemMatcher": []
+        },
+    ]
+}
