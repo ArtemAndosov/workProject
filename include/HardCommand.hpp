@@ -8,11 +8,14 @@ class HardCommand{
     tm* timeinfo = localtime(&seconds);
     void print(){
         std::cout<<asctime(timeinfo); 
-        std::cout<<"ID "<< m_ID << std::endl;
+        std::cout<<"device ID: "<< m_ID << std::endl;
+        std::cout<<"array: ";
         for (int i = 0; i<10; i++){
             std::cout<< m_array[i];
         };
         std::cout<< std::endl;
+        std::cout<< std::endl;
+
         };
         
 HardCommand (const int id,const int (&b)[10]){
