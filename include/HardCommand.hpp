@@ -6,7 +6,8 @@ class HardCommand{
     int m_array[10];
     time_t seconds = time(NULL);
     tm* timeinfo = localtime(&seconds);
-    void print(){
+    
+    void m_print(){
         std::cout<<asctime(timeinfo); 
         std::cout<<"device ID: "<< m_ID << std::endl;
         std::cout<<"array: ";

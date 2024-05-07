@@ -22,17 +22,19 @@ int main (){
      c.m_pQueue = &m_Queue;
      c.mute = &mtx;
 // запускаем девайсы
-   a.start();   
-    b.start();
-     c.start();
-
+   a.m_start();  
+  std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
+    b.m_start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+     c.m_start();
+//std::this_thread::sleep_for(std::chrono::milliseconds(100));
 // создали экшнъины
 ActionIn dev1;
-  dev1.dev = &a;
+  dev1.m_dev = &a;
 ActionIn dev2;
-  dev2.dev = &b;
+  dev2.m_dev = &b;
 ActionIn dev3;
-  dev3.dev = &c;
+  dev3.m_dev = &c;
 
 // создали эвенты
 Event Ev1;
@@ -54,38 +56,35 @@ for (ActionIn& action : Ev2.m_actions){
 };
 Events.push_back(Ev2);
 
-//std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; // проверяем что очередь не пуста
-
+std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; // проверяем что очередь не пуста
 //поехал процесс
-std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-while (true)  // пока очередь не пуста
+while (true)  
  {
-  // mtx.lock();
-  for (auto& event : Events){   // перебираем эвенты
-    for (auto& action : event.m_actions){  //перебираем АктионИны
-         action.m_probePacket(m_Queue.front().m_ID); // проверяем соответствие ИД из очереди и ИД девайса в АктионИне
-     if (action.m_Active == true){
-      event.m_probeAction(); // принтуем
-        m_Queue.pop();  // удаляем ХК из очереди
+    for (auto& event : Events){   // перебираем эвенты
+         //mtx.lock();
+         event.m_probeAction(m_Queue.front().m_ID);
+           // mtx.unlock();  
+        }; 
+             };
+      
+
+/*while (true)  
+ {
+  mtx.lock();
+    for (auto& event : Events){   // перебираем эвенты
+    for (auto& action : event.m_actions){ //перебираем АктионИны
+      if (m_Queue.front().m_ID == action.m_dev->m_ID)   // проверяем соответствие ИД из очереди и ИД девайса в АктионИне
+         {action.m_probePacket(m_Queue.front().m_ID); };// активируем совпавший АктионИн
+     if (action.m_Active == true) // для активированных АктионИн
+     {
+       Events[action.m_EventID].m_probeAction(); // принтуем
+              m_Queue.pop();  // удаляем ХК из очереди
         std::cout << "queue size: " << m_Queue.size() << std::endl <<  std::endl; 
      };
-   }; 
+        }; 
  };
-      //  mtx.unlock();
- };
-//create_Hc.join();
-//create_Hc2.join();
-//create_Hc3.join();
-   
-//тест вывода
-/*while (!m_Queue.empty())
-{m_Queue.front().print();
-m_Queue.pop();
-std::cout << "queue size: " << m_Queue.size() << std::endl; 
-}*/
-  
- // std::cout << "queue size: " << m_Queue.size() << std::endl;
-  
-   
+      mtx.unlock();
+      };*/
+
     return 0;
 }
