@@ -5,7 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
-//тест
+
 std::mutex mtx;
 int main (){
 //создали очередь
@@ -14,31 +14,21 @@ int main (){
 // создали девайсы 
     device a(1);
      a.m_pQueue = &m_Queue;
+     a.mute = &mtx;
     device b(2);
      b.m_pQueue = &m_Queue;
+     b.mute = &mtx;
     device c(3);
      c.m_pQueue = &m_Queue;
-// создали хк
-  std::thread create_Hc([&](){while (true){
-    mtx.lock();
-  a.create_Hc();
-b.create_Hc();
-c.create_Hc();
-mtx.unlock();
-std::this_thread::sleep_for(std::chrono::seconds(1));
-};});
-/*a.create_Hc();
-b.create_Hc();
-c.create_Hc();
-c.create_Hc();
-b.create_Hc();
-a.create_Hc();*/
+     c.mute = &mtx;
+// запускаем девайсы
+   a.start();   
+    b.start();
+     c.start();
 
 // создали экшнъины
 ActionIn dev1;
   dev1.dev = &a;
-//dev1.m_lastCommand = &(m_Queue.front());
-//m_Queue.pop();
 ActionIn dev2;
   dev2.dev = &b;
 ActionIn dev3;
@@ -67,10 +57,10 @@ Events.push_back(Ev2);
 //std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; // проверяем что очередь не пуста
 
 //поехал процесс
-std::this_thread::sleep_for(std::chrono::milliseconds(1100));
+std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 while (true)  // пока очередь не пуста
  {
-   mtx.lock();
+  // mtx.lock();
   for (auto& event : Events){   // перебираем эвенты
     for (auto& action : event.m_actions){  //перебираем АктионИны
          action.m_probePacket(m_Queue.front().m_ID); // проверяем соответствие ИД из очереди и ИД девайса в АктионИне
@@ -81,9 +71,11 @@ while (true)  // пока очередь не пуста
      };
    }; 
  };
-        mtx.unlock();
+      //  mtx.unlock();
  };
-create_Hc.join();
+//create_Hc.join();
+//create_Hc2.join();
+//create_Hc3.join();
    
 //тест вывода
 /*while (!m_Queue.empty())
