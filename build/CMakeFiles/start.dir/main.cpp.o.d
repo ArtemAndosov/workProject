@@ -147,4 +147,15 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /home/artem/workspace/work/include/Event.hpp \
  /home/artem/workspace/work/include/ActionIn.hpp \
  /home/artem/workspace/work/include/device.hpp \
- /home/artem/workspace/work/include/HardCommand.hpp
+ /home/artem/workspace/work/include/HardCommand.hpp \
+ /usr/include/c++/13.2.1/chrono /usr/include/c++/13.2.1/bits/chrono.h \
+ /usr/include/c++/13.2.1/ratio /usr/include/c++/13.2.1/cstdint \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/c++/13.2.1/limits \
+ /usr/include/c++/13.2.1/bits/parse_numbers.h \
+ /usr/include/c++/13.2.1/thread /usr/include/c++/13.2.1/bits/std_thread.h \
+ /usr/include/c++/13.2.1/bits/unique_ptr.h \
+ /usr/include/c++/13.2.1/bits/this_thread_sleep.h \
+ /usr/include/c++/13.2.1/mutex /usr/include/c++/13.2.1/bits/std_mutex.h \
+ /usr/include/c++/13.2.1/bits/unique_lock.h

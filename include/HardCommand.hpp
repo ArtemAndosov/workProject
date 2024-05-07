@@ -15,7 +15,6 @@ class HardCommand{
         };
         std::cout<< std::endl;
         std::cout<< std::endl;
-
         };
         
 HardCommand (const int id,const int (&b)[10]){

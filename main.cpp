@@ -1,12 +1,11 @@
 #include <iostream>
 #include <ctime>
 #include <queue>
-
-//#include <device.hpp>
-//#include <HardCommand.hpp>
-//#include <ActionIn.hpp>
 #include <Event.hpp>
-
+#include <chrono>
+#include <thread>
+#include <mutex>
+std::mutex mtx;
 int main (){
 //создали очередь
    std::queue<HardCommand> m_Queue;
@@ -19,9 +18,21 @@ int main (){
     device c(3);
      c.m_pQueue = &m_Queue;
 // создали хк
-a.create_Hc();
+  std::thread create_Hc([&](){while (true){
+    mtx.lock();
+  a.create_Hc();
 b.create_Hc();
 c.create_Hc();
+mtx.unlock();
+std::this_thread::sleep_for(std::chrono::seconds(1));
+};});
+/*a.create_Hc();
+b.create_Hc();
+c.create_Hc();
+c.create_Hc();
+b.create_Hc();
+a.create_Hc();*/
+
 // создали экшнъины
 ActionIn dev1;
   dev1.dev = &a;
@@ -52,35 +63,26 @@ for (ActionIn& action : Ev2.m_actions){
 };
 Events.push_back(Ev2);
 
-// проверка ИД
-/*std::cout <<  "size " << Events[0].m_actions.size() << std::endl; 
-std::cout <<  "size " << Events[1].m_actions.size() << std::endl; 
-std::cout <<  "Ev1 m_EventID " << Ev1.m_EventID << std::endl; 
-std::cout <<  "Ev2 m_EventID " << Ev2.m_EventID << std::endl; 
-std::cout <<  "m_EventID " << Events[0].m_actions[0].m_EventID << std::endl; 
-std::cout <<  "m_EventID " << Events[1].m_actions[0].m_EventID << std::endl; 
-std::cout <<  "m_EventID " << Events[1].m_actions[1].m_EventID << std::endl; */
-
-std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; // проверяем что очередь не пуста
-
+//std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; // проверяем что очередь не пуста
 
 //поехал процесс
-
-while (!m_Queue.empty())  // пока очередь не пуста
+std::this_thread::sleep_for(std::chrono::milliseconds(1100));
+while (true)  // пока очередь не пуста
  {
+   mtx.lock();
   for (auto& event : Events){   // перебираем эвенты
     for (auto& action : event.m_actions){  //перебираем АктионИны
-        action.m_probePacket(); // проверяем соответствие ИД из очереди и ИД девайса в АктионИне
+         action.m_probePacket(m_Queue.front().m_ID); // проверяем соответствие ИД из очереди и ИД девайса в АктионИне
+     if (action.m_Active == true){
       event.m_probeAction(); // принтуем
         m_Queue.pop();  // удаляем ХК из очереди
-        std::cout << "queue size: " << m_Queue.size() << std::endl << std::endl; 
-        }; 
-    };
-    
+        std::cout << "queue size: " << m_Queue.size() << std::endl <<  std::endl; 
+     };
+   }; 
  };
-
-
-
+        mtx.unlock();
+ };
+create_Hc.join();
    
 //тест вывода
 /*while (!m_Queue.empty())
@@ -89,7 +91,7 @@ m_Queue.pop();
 std::cout << "queue size: " << m_Queue.size() << std::endl; 
 }*/
   
-  std::cout << "queue size: " << m_Queue.size() << std::endl;
+ // std::cout << "queue size: " << m_Queue.size() << std::endl;
   
    
     return 0;
