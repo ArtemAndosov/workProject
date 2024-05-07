@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+//тест
 std::mutex mtx;
 int main (){
 //создали очередь
