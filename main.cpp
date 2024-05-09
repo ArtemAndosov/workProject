@@ -7,7 +7,8 @@
 #include <thread>
 
 std::mutex mtx;
-int main() {
+int main()
+{
 
   // создали очередь
   std::queue<HardCommand> m_Queue;
@@ -46,13 +47,15 @@ int main() {
 
   // заполняем вектор эвентов, проставляем ИД у ActionIn == ИД эвента
   Ev1.m_EventID = 0;
-  for (ActionIn &action : Ev1.m_actions) {
+  for (ActionIn &action : Ev1.m_actions)
+  {
     action.m_EventID = 0;
   };
   Events.push_back(Ev1);
 
   Ev2.m_EventID = 1;
-  for (ActionIn &action : Ev2.m_actions) {
+  for (ActionIn &action : Ev2.m_actions)
+  {
     action.m_EventID = 1;
   };
   Events.push_back(Ev2);
@@ -60,9 +63,12 @@ int main() {
   // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   // поехал основной процесс
-  while (true) {
-    while (!m_Queue.empty()) {
-      for (auto &event : Events) {
+  while (true)
+  {
+    while (!m_Queue.empty())
+    {
+      for (auto &event : Events)
+      {
         event.m_probeAction(m_Queue.front().m_ID);
         // mtx.unlock();
       };
