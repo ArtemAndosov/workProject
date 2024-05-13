@@ -4,24 +4,19 @@
 class Event
 {
 public:
-  int m_EventID;
-  std::vector<ActionIn> m_actions;
+  int m_eventID;
+  std::vector<ActionIn<HardCommand> *> m_actions;
 
   // ф-ция принтует все активные ActionIn текущего Event
-  void m_probeAction(const int id)
+  void m_probeAction()
   {
-    for (auto &action : m_actions)
+    for (auto action : m_actions)
     {
-      // забираем ХК из очереди в m_lastCommand при соответствии ИД
-      action.m_probePacket(id);
-      if (action.m_Active == true)
+      if (action->m_isActive == true)
       {
-        action.m_lastCommand->m_print();
-        action.m_Active = false;
-        if (!action.m_dev->m_pQueue->empty()) // если очередь не пустая
-          // если раскомментить эту строку, вылезет ошибка double free or corruption (out)
-          // std::cout << "queue size: " << action.m_dev->m_pQueue->size() << std::endl<< std::endl;
-          action.m_dev->m_pQueue->pop(); // удаляем принтованный
+        std::cout << std::asctime(localtime(&(*action).m_pLastCommand.m_time)) << std::endl;
+        std::cout << "device ID: " << action->m_pDevice->m_ID << std::endl;
+        action->m_pLastCommand.print();
       };
     };
   };

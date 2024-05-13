@@ -1,6 +1,8 @@
 CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/stdc-predef.h /home/artem/workspace/work/include/Event.hpp \
  /home/artem/workspace/work/include/ActionIn.hpp \
+ /home/artem/workspace/work/include/Action.hpp \
+ /home/artem/workspace/work/include/device.hpp \
  /home/artem/workspace/work/include/HardCommand.hpp \
  /usr/include/c++/13.2.1/ctime \
  /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -146,15 +148,15 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/c++/13.2.1/bits/parse_numbers.h \
  /usr/include/c++/13.2.1/bits/std_mutex.h \
  /usr/include/c++/13.2.1/bits/unique_lock.h \
- /home/artem/workspace/work/include/device.hpp \
- /usr/include/c++/13.2.1/chrono /usr/include/c++/13.2.1/queue \
- /usr/include/c++/13.2.1/deque \
+ /usr/include/c++/13.2.1/vector \
  /usr/include/c++/13.2.1/bits/stl_uninitialized.h \
- /usr/include/c++/13.2.1/bits/stl_deque.h \
- /usr/include/c++/13.2.1/bits/deque.tcc /usr/include/c++/13.2.1/vector \
  /usr/include/c++/13.2.1/bits/stl_vector.h \
  /usr/include/c++/13.2.1/bits/stl_bvector.h \
  /usr/include/c++/13.2.1/bits/vector.tcc \
+ /home/artem/workspace/work/include/deviceROW.hpp \
+ /usr/include/c++/13.2.1/chrono /usr/include/c++/13.2.1/queue \
+ /usr/include/c++/13.2.1/deque /usr/include/c++/13.2.1/bits/stl_deque.h \
+ /usr/include/c++/13.2.1/bits/deque.tcc \
  /usr/include/c++/13.2.1/bits/stl_heap.h \
  /usr/include/c++/13.2.1/bits/stl_queue.h /usr/include/c++/13.2.1/thread \
  /usr/include/c++/13.2.1/bits/std_thread.h \

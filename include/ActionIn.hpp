@@ -1,27 +1,22 @@
-#include <HardCommand.hpp>
-#include <device.hpp>
+// #include <HardCommand.hpp>
+// #include <device.hpp>
+#include <Action.hpp>
 #include <mutex>
-
-std::mutex atcmute;
-class ActionIn
+template <typename HardCommandType>
+class ActionIn : public Action
 {
 public:
-  int m_EventID;
-  bool m_Active = false;
-  device *m_dev;
-  HardCommand *m_lastCommand;
+  HardCommandType m_pLastCommand;
 
-  // забираем ХК из очереди в m_lastCommand при соответствии ИД
-  void m_probePacket(const int id)
+  bool m_probePacket(const HardCommand &HC)
   {
-    if (id == m_dev->m_ID)
-    {                                              // если ИД девайса ХК в очереди совпал с ИД девайса
-                                                   // в АктионИне
-                                                   // atcmute.lock();
-      m_lastCommand = &(m_dev->m_pQueue->front()); // Пишем ХК в Актион в евенте
-      m_Active = true;
-      // atcmute.unlock();// активируем АктионИн
+    if (HC.m_pDevice->m_deviceID == m_pDevice->m_ID) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
+    {
+      m_pLastCommand = HC; // Пишем ХК в Актион в евенте
+      m_isActive = true;
+      return true;
     }
+    return false;
   };
 
   ActionIn() = default;
