@@ -12,70 +12,72 @@ int main()
 
   // создали очередь
   std::queue<HardCommand> queue;
+  std::vector<deviceRAW> deviceRAWs;
+  std::vector<device> devices;
   std::vector<Event> events;
-  deviceROW DR1(1);
-  deviceROW DR2(2);
-  deviceROW DR3(3);
-  // создали девайсы
-  device a(DR1);
-  a.m_pQueue = &queue;
+  std::vector<ActionIn<HardCommand>> ActionsIn;
 
-  device b(DR2);
-  b.m_pQueue = &queue;
+  deviceRAWs.emplace_back(1);
+  deviceRAWs.emplace_back(2);
+  deviceRAWs.emplace_back(3);
 
-  device c(DR3);
-  c.m_pQueue = &queue;
-
+  // создали девайсРОУзы
+  for (size_t i = 0; i < deviceRAWs.size(); i++)
+  {
+    devices.emplace_back(deviceRAWs[i]);
+    devices[i].m_pQueue = &queue;
+  };
   // запускаем девайсы
-  a.m_start();
-  b.m_start();
-  c.m_start();
+  for (size_t i = 0; i < devices.size(); i++)
+  {
+    devices[i].m_start();
+  };
 
   // создали ActionIn
-  ActionIn<HardCommand> dev1;
-  dev1.m_pDevice = &a;
-  ActionIn<HardCommand> dev2;
-  dev2.m_pDevice = &b;
-  ActionIn<HardCommand> dev3;
-  dev3.m_pDevice = &c;
+  for (size_t i = 0; i < devices.size(); i++)
+  {
+    ActionsIn.emplace_back(ActionIn<HardCommand>());
+    ActionsIn[i].m_pDevice = &devices[i];
+  };
 
   // создали эвенты
-  Event Ev1;
-  Ev1.m_actions.push_back(&dev1);
-  Event Ev2;
-  Ev2.m_actions.push_back(&dev2);
-  Ev2.m_actions.push_back(&dev3);
-
-  // заполняем вектор эвентов, проставляем ИД у ActionIn == ИД эвента
-  Ev1.m_eventID = 0;
-  for (auto action : Ev1.m_actions)
+  for (size_t i = 0; i < 2; i++)
   {
-    action->m_eventID = 0;
-  };
-  events.push_back(Ev1);
+    events.emplace_back(Event());
+    events[i].m_eventID = i;
+  }
+  // ссвязали ActionIn и эвенты
+  events[0].m_actions.emplace_back(&ActionsIn[0]);
+  events[1].m_actions.emplace_back(&ActionsIn[1]);
+  events[1].m_actions.emplace_back(&ActionsIn[2]);
 
-  Ev2.m_eventID = 1;
-  for (auto action : Ev2.m_actions)
+  for (auto &event : events)
   {
-    action->m_eventID = 1;
-  };
-  events.push_back(Ev2);
+    for (auto &action : event.m_actions)
+    {
+      action->m_eventID = event.m_eventID;
+    }
+  }
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
   // поехал основной процесс
   while (true)
   {
-    for (auto event : events)
-      for (auto action : event.m_actions)
+    if (!queue.empty())
+    {
+      for (auto &action : ActionsIn)
       {
-        if (action->m_probePacket(queue.front()))
+        if (action.m_probePacket(queue.front()))
         {
-          event.m_probeAction();
-          action->m_isActive = false;
+
+          events[action.m_eventID].m_probeAction();
+          queue.pop();
+          action.m_isActive = false;
         }
       };
-    // std::this_thread::sleep_for(std::chrono::milliseconds(1000)); // если очередь пустая, ждем сек чтобы заполнилась
+      continue;
+    };
   };
   return 0;
-}
+};

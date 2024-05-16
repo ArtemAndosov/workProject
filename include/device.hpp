@@ -5,13 +5,13 @@
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <deviceROW.hpp>
+#include <deviceRAW.hpp>
 
 class device
 {
 public:
   std::queue<HardCommand> *m_pQueue;
-  deviceROW *m_deviceROW;
+  deviceRAW *m_deviceRAW;
   int m_ID;
   int m_array[10];
   enum class m_interface;
@@ -29,7 +29,8 @@ public:
     while (true)
     {
       m_generateMassive();
-      HardCommand Hc1(*m_deviceROW);
+      HardCommand Hc1;
+      Hc1.m_pDevice = m_deviceRAW;
       Hc1.m_packet.assign(m_array, m_array + (std::size(m_array)));
       m_pQueue->push(Hc1);
       std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -44,6 +45,6 @@ public:
   };
 
   // в конструктор передаем ИД девайса
-  device(deviceROW &dev) : m_deviceROW{&dev} { this->m_ID = dev.m_deviceID; };
+  device(deviceRAW &dev) : m_deviceRAW{&dev} { this->m_ID = dev.m_deviceID; };
   ~device() = default;
 };

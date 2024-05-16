@@ -8,7 +8,7 @@ class ActionIn : public Action
 public:
   HardCommandType m_pLastCommand;
 
-  bool m_probePacket(const HardCommand &HC)
+  bool m_probePacket(const HardCommandType &HC)
   {
     if (HC.m_pDevice->m_deviceID == m_pDevice->m_ID) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
     {

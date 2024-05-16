@@ -10,7 +10,7 @@ public:
   // ф-ция принтует все активные ActionIn текущего Event
   void m_probeAction()
   {
-    for (auto action : m_actions)
+    for (auto &action : m_actions)
     {
       if (action->m_isActive == true)
       {
@@ -20,7 +20,6 @@ public:
       };
     };
   };
-
   Event() = default;
   ~Event() = default;
 };

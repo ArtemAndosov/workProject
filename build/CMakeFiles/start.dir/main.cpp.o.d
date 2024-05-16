@@ -153,7 +153,7 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/c++/13.2.1/bits/stl_vector.h \
  /usr/include/c++/13.2.1/bits/stl_bvector.h \
  /usr/include/c++/13.2.1/bits/vector.tcc \
- /home/artem/workspace/work/include/deviceROW.hpp \
+ /home/artem/workspace/work/include/deviceRAW.hpp \
  /usr/include/c++/13.2.1/chrono /usr/include/c++/13.2.1/queue \
  /usr/include/c++/13.2.1/deque /usr/include/c++/13.2.1/bits/stl_deque.h \
  /usr/include/c++/13.2.1/bits/deque.tcc \
