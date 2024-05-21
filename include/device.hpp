@@ -10,6 +10,7 @@
 class device
 {
 public:
+  std::mutex *mtx_queue;
   std::queue<HardCommand> *m_pQueue;
   deviceRAW *m_deviceRAW;
   int m_ID;
@@ -32,7 +33,9 @@ public:
       HardCommand Hc1;
       Hc1.m_pDevice = m_deviceRAW;
       Hc1.m_packet.assign(m_array, m_array + (std::size(m_array)));
+      mtx_queue->lock();
       m_pQueue->push(Hc1);
+      mtx_queue->unlock();
       std::this_thread::sleep_for(std::chrono::seconds(1));
     };
   };

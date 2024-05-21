@@ -6,7 +6,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
-
+std::mutex mtx_queue;
 int main()
 {
 
@@ -21,11 +21,12 @@ int main()
   deviceRAWs.emplace_back(2);
   deviceRAWs.emplace_back(3);
 
-  // создали девайсРОУзы
+  // создали девайсы
   for (size_t i = 0; i < deviceRAWs.size(); i++)
   {
     devices.emplace_back(deviceRAWs[i]);
     devices[i].m_pQueue = &queue;
+    devices[i].mtx_queue = &mtx_queue;
   };
   // запускаем девайсы
   for (size_t i = 0; i < devices.size(); i++)
@@ -64,20 +65,22 @@ int main()
   // поехал основной процесс
   while (true)
   {
+    mtx_queue.lock();
     if (!queue.empty())
     {
+      // std::cout << "if " << std::endl;
       for (auto &action : ActionsIn)
       {
         if (action.m_probePacket(queue.front()))
         {
 
           events[action.m_eventID].m_probeAction();
-          queue.pop();
           action.m_isActive = false;
         }
       };
-      continue;
+      queue.pop();
     };
+    mtx_queue.unlock();
   };
   return 0;
 };
