@@ -65,6 +65,8 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "variant": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "text_encoding": "cpp",
+        "codecvt": "cpp"
     },
 }

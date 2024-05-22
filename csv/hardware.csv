@@ -1,0 +1,7 @@
+commandName,device,direction,address,port,parameters
+testEvent1,testDevice1,download,,,testParamTPO1
+testEvent1,testDevice1,upload,,,
+testEvent2,testDevice2,download,FF:FF:FF:FF:FF:FF,,
+testEvent2,testDevice2,upload,AA:AA:AA:AA:AA:AA,,
+testEvent2,testDevice3,download,192.168.0.1,1001,
+testEvent2,testDevice3,upload,192.168.0.2,1001,

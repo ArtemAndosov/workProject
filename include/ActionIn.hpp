@@ -7,17 +7,29 @@ class ActionIn : public Action
 {
 public:
   HardCommandType m_pLastCommand;
-
-  bool m_probePacket(const HardCommandType &HC)
+  enum class EStatus : uint8_t
   {
-    if (HC.m_pDevice->m_deviceID == m_pDevice->m_ID) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
-    {
-      m_pLastCommand = HC; // Пишем ХК в Актион в евенте
-      m_isActive = true;
-      return true;
-    }
-    return false;
+    open,
+    closed,
+    sleep,
+    deleted
   };
+  EStatus m_status{EStatus::open};
+
+  bool probePacket(const HardCommandType &HC)
+  {
+    if (m_status == EStatus::open)
+    {
+      if (HC.m_pDevice->m_deviceID == m_pDevice->m_ID) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
+      {
+        m_pLastCommand = HC; // Пишем ХК в Актион в евенте
+        m_isActive = true;
+        return true;
+      }
+      return false;
+    };
+    return false;
+  }
 
   ActionIn() = default;
   ~ActionIn() = default;

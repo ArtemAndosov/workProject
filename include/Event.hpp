@@ -1,14 +1,19 @@
 #include <ActionIn.hpp>
 #include <vector>
 #include <mutex>
+#include <string>
+#include <EventRaw.hpp>
 class Event
 {
 public:
+  std::string name;
+  std::string timeStart;
+  std::string parameters;
   int m_eventID;
   std::vector<ActionIn<HardCommand> *> m_actions;
 
   // ф-ция принтует все активные ActionIn текущего Event
-  void m_probeAction()
+  void probeAction()
   {
     for (auto &action : m_actions)
     {
@@ -20,6 +25,6 @@ public:
       };
     };
   };
-  Event() = default;
+  Event(eventRaw ERaw) : name{ERaw.name} {};
   ~Event() = default;
 };

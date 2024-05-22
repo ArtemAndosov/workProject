@@ -3,11 +3,11 @@
 #include <iostream>
 #include <mutex>
 #include <vector>
-#include <deviceRAW.hpp>
+#include <deviceRaw.hpp>
 class HardCommand
 {
 public:
-  deviceRAW *m_pDevice;
+  deviceRaw *m_pDevice = nullptr;
   std::vector<int> m_packet;
   time_t m_time;
 

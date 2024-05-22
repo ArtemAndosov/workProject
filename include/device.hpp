@@ -5,19 +5,24 @@
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <deviceRAW.hpp>
+#include <deviceRaw.hpp>
 
 class device
 {
 public:
-  std::mutex *mtx_queue;
+  std::mutex *m_pQueueMutex = nullptr;
   std::queue<HardCommand> *m_pQueue;
-  deviceRAW *m_deviceRAW;
+  deviceRaw *m_deviceRaw;
   int m_ID;
   int m_array[10];
-  enum class m_interface;
+  enum class EInterfaceType : uint8_t
+  {
+    error,
+    test
+  };
+  EInterfaceType m_interface;
   // ф-ция генерирует массив случ.чисел
-  void m_generateMassive()
+  void generateMassive()
   {
     std::srand(time(0));
     for (int i = 0; i < 10; i++)
@@ -25,29 +30,29 @@ public:
   };
 
   // ф-ция заполняет HardCommand и добавляет в очередь
-  void m_listen()
+  void listen()
   {
     while (true)
     {
-      m_generateMassive();
+      generateMassive();
       HardCommand Hc1;
-      Hc1.m_pDevice = m_deviceRAW;
+      Hc1.m_pDevice = m_deviceRaw;
       Hc1.m_packet.assign(m_array, m_array + (std::size(m_array)));
-      mtx_queue->lock();
+      m_pQueueMutex->lock();
       m_pQueue->push(Hc1);
-      mtx_queue->unlock();
+      m_pQueueMutex->unlock();
       std::this_thread::sleep_for(std::chrono::seconds(1));
     };
   };
 
   // запускаем поток девайса
-  void m_start()
+  void start()
   {
-    std::thread t_listen(&device::m_listen, this);
+    std::thread t_listen(&device::listen, this);
     t_listen.detach();
   };
 
   // в конструктор передаем ИД девайса
-  device(deviceRAW &dev) : m_deviceRAW{&dev} { this->m_ID = dev.m_deviceID; };
+  device(deviceRaw &dev) : m_deviceRaw{&dev} { this->m_ID = dev.m_deviceID; };
   ~device() = default;
 };
