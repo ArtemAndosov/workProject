@@ -19,12 +19,13 @@ public:
     {
       if (action->m_isActive == true)
       {
-        std::cout << std::asctime(localtime(&(*action).m_pLastCommand.m_time)) << std::endl;
-        std::cout << "device ID: " << action->m_pDevice->m_ID << std::endl;
+        std::cout << std::asctime(localtime(&(*action).m_pLastCommand.m_time));
+        std::cout << "device name: " << action->m_pDevice->m_deviceName << std::endl;
         action->m_pLastCommand.print();
+        std::cout << std::endl;
       };
     };
   };
-  Event(eventRaw ERaw) : name{ERaw.name} {};
+  Event(eventRaw ERaw) : name{ERaw.m_eventName} {};
   ~Event() = default;
 };

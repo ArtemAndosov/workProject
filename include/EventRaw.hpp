@@ -1,7 +1,8 @@
+#pragma once
 #include <string>
 struct eventRaw
 {
-    std::string name;
+    std::string m_eventName;
     eventRaw() = default;
     ~eventRaw() = default;
 };

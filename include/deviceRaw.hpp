@@ -1,7 +1,8 @@
 #pragma once
+#include <string>
 struct deviceRaw
 {
-    int m_deviceID;
-    deviceRaw(int a) : m_deviceID{a} {};
+   std::string m_deviceName;
+    deviceRaw() = default;
     ~deviceRaw() = default;
 };

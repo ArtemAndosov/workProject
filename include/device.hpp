@@ -5,6 +5,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include <string>
 #include <deviceRaw.hpp>
 
 class device
@@ -13,7 +14,7 @@ public:
   std::mutex *m_pQueueMutex = nullptr;
   std::queue<HardCommand> *m_pQueue;
   deviceRaw *m_deviceRaw;
-  int m_ID;
+  std::string m_deviceName;
   int m_array[10];
   enum class EInterfaceType : uint8_t
   {
@@ -53,6 +54,6 @@ public:
   };
 
   // в конструктор передаем ИД девайса
-  device(deviceRaw &dev) : m_deviceRaw{&dev} { this->m_ID = dev.m_deviceID; };
+  device(deviceRaw &dev) : m_deviceRaw{&dev} { this->m_deviceName = dev.m_deviceName; };
   ~device() = default;
 };

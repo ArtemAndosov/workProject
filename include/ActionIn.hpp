@@ -20,7 +20,7 @@ public:
   {
     if (m_status == EStatus::open)
     {
-      if (HC.m_pDevice->m_deviceID == m_pDevice->m_ID) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
+      if (HC.m_pDevice->m_deviceName == m_pDevice->m_deviceName) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
       {
         m_pLastCommand = HC; // Пишем ХК в Актион в евенте
         m_isActive = true;
