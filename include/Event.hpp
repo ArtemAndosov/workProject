@@ -1,3 +1,4 @@
+#pragma once
 #include <ActionIn.hpp>
 #include <vector>
 #include <mutex>
@@ -6,10 +7,11 @@
 class Event
 {
 public:
-  std::string name;
-  std::string timeStart;
-  std::string parameters;
+  std::string m_name;
+  std::string m_timeStart;
+  std::string m_parameters;
   int m_eventID;
+  eventRaw *m_pEventRaw;
   std::vector<ActionIn<HardCommand> *> m_actions;
 
   // ф-ция принтует все активные ActionIn текущего Event
@@ -26,6 +28,6 @@ public:
       };
     };
   };
-  Event(eventRaw ERaw) : name{ERaw.m_eventName} {};
+  Event(eventRaw &ERaw) : m_name{ERaw.m_eventName}, m_pEventRaw{&ERaw} {};
   ~Event() = default;
 };

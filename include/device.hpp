@@ -13,7 +13,7 @@ class device
 public:
   std::mutex *m_pQueueMutex = nullptr;
   std::queue<HardCommand> *m_pQueue;
-  deviceRaw *m_deviceRaw;
+  deviceRaw *m_pDeviceRaw;
   std::string m_deviceName;
   int m_array[10];
   enum class EInterfaceType : uint8_t
@@ -37,7 +37,7 @@ public:
     {
       generateMassive();
       HardCommand Hc1;
-      Hc1.m_pDevice = m_deviceRaw;
+      Hc1.m_pDevice = this->m_pDeviceRaw;
       Hc1.m_packet.assign(m_array, m_array + (std::size(m_array)));
       m_pQueueMutex->lock();
       m_pQueue->push(Hc1);
@@ -54,6 +54,6 @@ public:
   };
 
   // в конструктор передаем ИД девайса
-  device(deviceRaw &dev) : m_deviceRaw{&dev} { this->m_deviceName = dev.m_deviceName; };
+  device(deviceRaw &dev) : m_pDeviceRaw{&dev} { this->m_deviceName = dev.m_deviceName; };
   ~device() = default;
 };

@@ -1,4 +1,4 @@
 name,interface,path,port
-testDev1,COM,/dev/ttyS0,0
-testDev2,MAC,,0
-testDev3,UDP,,1001
+testDevice1,COM,/dev/ttyS0,0
+testDevice2,MAC,,0
+testDevice3,UDP,,1001

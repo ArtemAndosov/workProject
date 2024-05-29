@@ -1,5 +1,4 @@
-// #include <HardCommand.hpp>
-// #include <device.hpp>
+#pragma once
 #include <Action.hpp>
 #include <mutex>
 template <typename HardCommandType>
@@ -16,7 +15,7 @@ public:
   };
   EStatus m_status{EStatus::open};
 
-  bool probePacket(const HardCommandType &HC)
+  bool probePacket(const HardCommand &HC)
   {
     if (m_status == EStatus::open)
     {
@@ -30,7 +29,11 @@ public:
     };
     return false;
   }
+  ActionIn(hardwareRaw &Raw)
+  {
+    this->m_eventName = Raw.m_eventName;
+    this->m_pHardWareRaw = &Raw;
+  };
 
-  ActionIn() = default;
   ~ActionIn() = default;
 };
