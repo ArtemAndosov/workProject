@@ -4,6 +4,7 @@
 #include <mutex>
 #include <string>
 #include <EventRaw.hpp>
+#include <map>
 class Event
 {
 public:
