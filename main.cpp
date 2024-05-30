@@ -2,26 +2,92 @@
 #include <chrono>
 #include <ctime>
 #include <iostream>
+#include <map>
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <rapidcsv.h>
 
 std::mutex queueMutex;
+std::queue<HardCommand> queue;
+std::vector<deviceRaw> deviceRaws;
+std::vector<device> devices;
+std::vector<eventRaw> eventRaws;
+std::vector<Event> events;
+std::vector<hardwareRaw> hardWares;
+std::vector<ActionIn<HardCommand>> actionsIn;
 
 void parseTable(std::vector<eventRaw> &Raw);
 void parseTable(std::vector<deviceRaw> &Raw);
 void parseTable(std::vector<hardwareRaw> &Raw);
+void LoadConfig();
+void thr();
 
 int main()
 {
-  std::queue<HardCommand> queue;
-  std::vector<deviceRaw> deviceRaws;
-  std::vector<device> devices;
-  std::vector<eventRaw> eventRaws;
-  std::vector<Event> events;
-  std::vector<hardwareRaw> hardWares;
-  std::vector<ActionIn<HardCommand>> actionsIn;
+  LoadConfig();
+  thr();
+  return 0;
+}
+
+void parseTable(std::vector<eventRaw> &Raw)
+{
+  // std::map<std::string, std::vector<std::string>> map;
+  // rapidcsv::Document parametersEv("../csv/paramEv.csv", rapidcsv::LabelParams(0, -1));
+
+  rapidcsv::Document doc("../csv/events.csv", rapidcsv::LabelParams(0, -1));
+  for (size_t i = 0; i < doc.GetRowCount(); i++)
+  {
+    Raw.emplace_back();
+    std::string name = doc.GetCell<std::string>("name", i);
+    Raw[i].m_eventName = name;
+    int timeStart = doc.GetCell<int>("timeStart", i);
+    Raw[i].m_timeStart = timeStart;
+    std::string parameters = doc.GetCell<std::string>("parameters", i);
+    Raw[i].m_parameters = parameters;
+  };
+}
+
+void parseTable(std::vector<deviceRaw> &Raw)
+{
+  rapidcsv::Document doc("../csv/devices.csv", rapidcsv::LabelParams(0, -1));
+  for (size_t i = 0; i < doc.GetRowCount(); i++)
+  {
+    Raw.emplace_back();
+    std::string name = doc.GetCell<std::string>("name", i);
+    Raw[i].m_deviceName = name;
+    std::string interface = doc.GetCell<std::string>("interface", i);
+    Raw[i].m_interface = interface;
+    std::string path = doc.GetCell<std::string>("path", i);
+    Raw[i].m_path = path;
+    int port = doc.GetCell<int>("port", i);
+    Raw[i].m_port = port;
+  };
+}
+
+void parseTable(std::vector<hardwareRaw> &Raw)
+{
+  rapidcsv::Document doc("../csv/hardware.csv", rapidcsv::LabelParams(0, -1));
+  for (size_t i = 0; i < doc.GetRowCount(); i++)
+  {
+    Raw.emplace_back();
+    std::string eventName = doc.GetCell<std::string>("commandName", i);
+    Raw[i].m_eventName = eventName;
+    std::string device = doc.GetCell<std::string>("device", i);
+    Raw[i].m_deviceName = device;
+    std::string port = doc.GetCell<std::string>("port", i);
+    Raw[i].m_port = port;
+    std::string address = doc.GetCell<std::string>("address", i);
+    Raw[i].m_address = address;
+    std::string parameters = doc.GetCell<std::string>("parameters", i);
+    Raw[i].m_parameters = parameters;
+    std::string direction = doc.GetCell<std::string>("direction", i);
+    Raw[i].m_direction = direction;
+  };
+}
+
+void LoadConfig()
+{
 
   // создали девайсроу
 
@@ -82,10 +148,10 @@ int main()
       }
     }
   }
+}
 
-  // std::this_thread::sleep_for(std::chrono::milliseconds(4000));
-
-  // поехал основной процесс
+void thr() // поехал основной процессs
+{
   while (true)
   {
     queueMutex.lock();
@@ -106,58 +172,4 @@ int main()
     }
     queueMutex.unlock();
   }
-  return 0;
-}
-
-void parseTable(std::vector<eventRaw> &Raw)
-{
-  rapidcsv::Document doc("../csv/events.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++)
-  {
-    Raw.emplace_back();
-    std::string name = doc.GetCell<std::string>("name", i);
-    Raw[i].m_eventName = name;
-    int timeStart = doc.GetCell<int>("timeStart", i);
-    Raw[i].m_timeStart = timeStart;
-    std::string parameters = doc.GetCell<std::string>("parameters", i);
-    Raw[i].m_parameters = parameters;
-  };
-}
-
-void parseTable(std::vector<deviceRaw> &Raw)
-{
-  rapidcsv::Document doc("../csv/devices.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++)
-  {
-    Raw.emplace_back();
-    std::string name = doc.GetCell<std::string>("name", i);
-    Raw[i].m_deviceName = name;
-    std::string interface = doc.GetCell<std::string>("interface", i);
-    Raw[i].m_interface = interface;
-    std::string path = doc.GetCell<std::string>("path", i);
-    Raw[i].m_path = path;
-    int port = doc.GetCell<int>("port", i);
-    Raw[i].m_port = port;
-  };
-}
-
-void parseTable(std::vector<hardwareRaw> &Raw)
-{
-  rapidcsv::Document doc("../csv/hardware.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++)
-  {
-    Raw.emplace_back();
-    std::string eventName = doc.GetCell<std::string>("commandName", i);
-    Raw[i].m_eventName = eventName;
-    std::string device = doc.GetCell<std::string>("device", i);
-    Raw[i].m_deviceName = device;
-    std::string port = doc.GetCell<std::string>("port", i);
-    Raw[i].m_port = port;
-    std::string address = doc.GetCell<std::string>("address", i);
-    Raw[i].m_address = address;
-    std::string parameters = doc.GetCell<std::string>("parameters", i);
-    Raw[i].m_parameters = parameters;
-    std::string direction = doc.GetCell<std::string>("direction", i);
-    Raw[i].m_direction = direction;
-  };
 }

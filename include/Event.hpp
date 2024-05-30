@@ -7,10 +7,9 @@
 class Event
 {
 public:
-  std::string m_name;
-  std::string m_timeStart;
-  std::string m_parameters;
   int m_eventID;
+  std::string m_name;
+  std::map<std::string, std::vector<std::string>> m_parameters;
   eventRaw *m_pEventRaw;
   std::vector<ActionIn<HardCommand> *> m_actions;
 
