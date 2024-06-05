@@ -160,8 +160,14 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/c++/14.1.1/bits/stl_bvector.h \
  /usr/include/c++/14.1.1/bits/vector.tcc \
  /home/artem/workspace/work/include/deviceRaw.hpp \
- /usr/include/c++/14.1.1/chrono /usr/include/c++/14.1.1/queue \
- /usr/include/c++/14.1.1/deque /usr/include/c++/14.1.1/bits/stl_deque.h \
+ /usr/include/c++/14.1.1/map /usr/include/c++/14.1.1/bits/stl_tree.h \
+ /usr/include/c++/14.1.1/ext/aligned_buffer.h \
+ /usr/include/c++/14.1.1/bits/node_handle.h \
+ /usr/include/c++/14.1.1/bits/stl_map.h \
+ /usr/include/c++/14.1.1/bits/stl_multimap.h \
+ /usr/include/c++/14.1.1/bits/erase_if.h /usr/include/c++/14.1.1/chrono \
+ /usr/include/c++/14.1.1/queue /usr/include/c++/14.1.1/deque \
+ /usr/include/c++/14.1.1/bits/stl_deque.h \
  /usr/include/c++/14.1.1/bits/deque.tcc \
  /usr/include/c++/14.1.1/bits/stl_heap.h \
  /usr/include/c++/14.1.1/bits/stl_queue.h /usr/include/c++/14.1.1/thread \
@@ -170,12 +176,6 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/c++/14.1.1/bits/this_thread_sleep.h \
  /home/artem/workspace/work/include/HardwareRaw.hpp \
  /home/artem/workspace/work/include/EventRaw.hpp \
- /usr/include/c++/14.1.1/map /usr/include/c++/14.1.1/bits/stl_tree.h \
- /usr/include/c++/14.1.1/ext/aligned_buffer.h \
- /usr/include/c++/14.1.1/bits/node_handle.h \
- /usr/include/c++/14.1.1/bits/stl_map.h \
- /usr/include/c++/14.1.1/bits/stl_multimap.h \
- /usr/include/c++/14.1.1/bits/erase_if.h \
  /home/artem/workspace/work/include/rapidcsv.h \
  /usr/include/c++/14.1.1/algorithm \
  /usr/include/c++/14.1.1/bits/stl_algo.h \
@@ -224,4 +224,60 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/work/main.cpp \
  /usr/include/c++/14.1.1/bits/locale_facets_nonio.tcc \
  /usr/include/c++/14.1.1/bits/locale_conv.h \
  /usr/include/c++/14.1.1/bits/quoted_string.h \
- /usr/include/c++/14.1.1/sstream /usr/include/c++/14.1.1/bits/sstream.tcc
+ /usr/include/c++/14.1.1/sstream /usr/include/c++/14.1.1/bits/sstream.tcc \
+ /home/artem/workspace/work/include/rapidjson/document.h \
+ /home/artem/workspace/work/include/rapidjson/reader.h \
+ /home/artem/workspace/work/include/rapidjson/allocators.h \
+ /home/artem/workspace/work/include/rapidjson/rapidjson.h \
+ /usr/include/c++/14.1.1/cstring /usr/include/string.h \
+ /usr/include/strings.h /usr/include/inttypes.h \
+ /usr/include/c++/14.1.1/utility \
+ /usr/include/c++/14.1.1/bits/stl_relops.h \
+ /home/artem/workspace/work/include/rapidjson/internal/meta.h \
+ /home/artem/workspace/work/include/rapidjson/internal/../rapidjson.h \
+ /usr/include/c++/14.1.1/memory \
+ /usr/include/c++/14.1.1/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/14.1.1/bits/align.h \
+ /usr/include/c++/14.1.1/bits/shared_ptr.h \
+ /usr/include/c++/14.1.1/bits/shared_ptr_base.h \
+ /usr/include/c++/14.1.1/bits/allocated_ptr.h \
+ /usr/include/c++/14.1.1/ext/concurrence.h \
+ /usr/include/c++/14.1.1/bits/shared_ptr_atomic.h \
+ /usr/include/c++/14.1.1/bits/atomic_base.h \
+ /usr/include/c++/14.1.1/bits/atomic_lockfree_defines.h \
+ /usr/include/c++/14.1.1/backward/auto_ptr.h \
+ /usr/include/c++/14.1.1/pstl/glue_memory_defs.h \
+ /home/artem/workspace/work/include/rapidjson/stream.h \
+ /home/artem/workspace/work/include/rapidjson/encodings.h \
+ /home/artem/workspace/work/include/rapidjson/encodedstream.h \
+ /home/artem/workspace/work/include/rapidjson/memorystream.h \
+ /home/artem/workspace/work/include/rapidjson/internal/clzll.h \
+ /home/artem/workspace/work/include/rapidjson/internal/stack.h \
+ /home/artem/workspace/work/include/rapidjson/internal/../allocators.h \
+ /home/artem/workspace/work/include/rapidjson/internal/swap.h \
+ /home/artem/workspace/work/include/rapidjson/internal/strtod.h \
+ /home/artem/workspace/work/include/rapidjson/internal/ieee754.h \
+ /home/artem/workspace/work/include/rapidjson/internal/biginteger.h \
+ /home/artem/workspace/work/include/rapidjson/internal/diyfp.h \
+ /home/artem/workspace/work/include/rapidjson/internal/clzll.h \
+ /home/artem/workspace/work/include/rapidjson/internal/pow10.h \
+ /usr/include/c++/14.1.1/climits \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.1.1/include/limits.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/14.1.1/include/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+ /usr/include/bits/uio_lim.h \
+ /home/artem/workspace/work/include/rapidjson/error/error.h \
+ /home/artem/workspace/work/include/rapidjson/error/../rapidjson.h \
+ /home/artem/workspace/work/include/rapidjson/internal/strfunc.h \
+ /home/artem/workspace/work/include/rapidjson/internal/../stream.h \
+ /home/artem/workspace/work/include/rapidjson/internal/../rapidjson.h \
+ /usr/include/c++/14.1.1/iterator \
+ /usr/include/c++/14.1.1/bits/stream_iterator.h \
+ /home/artem/workspace/work/include/rapidjson/writer.h \
+ /home/artem/workspace/work/include/rapidjson/internal/dtoa.h \
+ /home/artem/workspace/work/include/rapidjson/internal/itoa.h \
+ /home/artem/workspace/work/include/rapidjson/internal/itoa.h \
+ /home/artem/workspace/work/include/rapidjson/stringbuffer.h \
+ /home/artem/workspace/work/include/rapidjson/stringbuffer.h

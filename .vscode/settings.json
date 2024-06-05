@@ -67,6 +67,9 @@
         "variant": "cpp",
         "queue": "cpp",
         "text_encoding": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "bitset": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
     },
 }

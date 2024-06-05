@@ -7,6 +7,9 @@
 #include <queue>
 #include <thread>
 #include <rapidcsv.h>
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 
 std::mutex queueMutex;
 std::queue<HardCommand> queue;
@@ -32,9 +35,6 @@ int main()
 
 void parseTable(std::vector<eventRaw> &Raw)
 {
-  // std::map<std::string, std::vector<std::string>> map;
-  // rapidcsv::Document parametersEv("../csv/paramEv.csv", rapidcsv::LabelParams(0, -1));
-
   rapidcsv::Document doc("../csv/events.csv", rapidcsv::LabelParams(0, -1));
   for (size_t i = 0; i < doc.GetRowCount(); i++)
   {
@@ -44,12 +44,53 @@ void parseTable(std::vector<eventRaw> &Raw)
     int timeStart = doc.GetCell<int>("timeStart", i);
     Raw[i].m_timeStart = timeStart;
     std::string parameters = doc.GetCell<std::string>("parameters", i);
-    Raw[i].m_parameters = parameters;
-  };
+    Raw[i].m_parametersName = parameters;
+  }
+
+  rapidcsv::Document parametersEv("../csv/paramEv.csv", rapidcsv::LabelParams(0, -1));
+  for (size_t i = 0; i < parametersEv.GetRowCount(); i++)
+  {
+    std::string json = parametersEv.GetCell<std::string>("parameters", i);
+    std::string parameters = parametersEv.GetCell<std::string>("name", i);
+    rapidjson::Document d;
+    d.Parse(json.c_str());
+    for (auto &event : Raw)
+    {
+      if (event.m_parametersName == parameters)
+      {
+        for (rapidjson::Value::ConstMemberIterator itr = d.MemberBegin();
+             itr != d.MemberEnd(); ++itr)
+        {
+          std::vector<std::string> vec;
+          switch (itr->value.GetType())
+          {
+          case 5:
+            vec.push_back(itr->value.GetString());
+            event.m_parameters.emplace(itr->name.GetString(), vec);
+            break;
+          case 6:
+            vec.push_back(std::to_string(itr->value.GetInt()));
+            event.m_parameters.emplace(itr->name.GetString(), vec);
+            break;
+          case 4:
+          {
+            for (size_t i = 0; i < itr->value.Size(); i++)
+              vec.push_back(itr->value[i].GetString());
+            event.m_parameters.emplace(itr->name.GetString(), vec);
+          }
+          break;
+          default:
+            break;
+          }
+        }
+      }
+    }
+  }
 }
 
 void parseTable(std::vector<deviceRaw> &Raw)
 {
+
   rapidcsv::Document doc("../csv/devices.csv", rapidcsv::LabelParams(0, -1));
   for (size_t i = 0; i < doc.GetRowCount(); i++)
   {
@@ -57,7 +98,7 @@ void parseTable(std::vector<deviceRaw> &Raw)
     std::string name = doc.GetCell<std::string>("name", i);
     Raw[i].m_deviceName = name;
     std::string interface = doc.GetCell<std::string>("interface", i);
-    Raw[i].m_interface = interface;
+    Raw[i].m_interface = Raw[i].StringToEnum[interface];
     std::string path = doc.GetCell<std::string>("path", i);
     Raw[i].m_path = path;
     int port = doc.GetCell<int>("port", i);
