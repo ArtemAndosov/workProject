@@ -5,6 +5,10 @@
 #include <string>
 #include <EventRaw.hpp>
 #include <map>
+/**
+ * @brief принтует активные ActionIn
+ * 
+ */
 class Event
 {
 public:
@@ -13,7 +17,10 @@ public:
   eventRaw *m_pEventRaw;
   std::vector<ActionIn<HardCommand> *> m_actions;
 
-  // ф-ция принтует все активные ActionIn текущего Event
+  /**
+   * @brief для активных ActionIn из своего вектора принтует
+   *
+   */
   void probeAction()
   {
     for (auto &action : m_actions)

@@ -4,6 +4,10 @@
 #include <mutex>
 #include <vector>
 #include <deviceRaw.hpp>
+/**
+ * @brief Содержит пакет и инфу по нему
+ *
+ */
 class HardCommand
 {
 public:

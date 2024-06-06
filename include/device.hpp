@@ -7,7 +7,10 @@
 #include <thread>
 #include <string>
 #include <deviceRaw.hpp>
-
+/**
+ * @brief создает пакеты, формирует ХК и пишет их в очередь раз в сек
+ *
+ */
 class device
 {
 public:
@@ -22,7 +25,11 @@ public:
     test
   };
   EInterfaceType m_interface;
-  // ф-ция генерирует массив случ.чисел
+
+  /**
+   * @brief генерирует массив случ.чисел(пакет)
+   *
+   */
   void generateMassive()
   {
     std::srand(time(0));
@@ -30,9 +37,14 @@ public:
       m_array[i] = 1 + rand() % 5;
   };
 
-  // ф-ция заполняет HardCommand и добавляет в очередь
+  /**
+   * @brief заполняет HardCommand и добавляет в очередь раз в секунду
+   *
+   */
   void listen()
   {
+    std::thread start([this]()
+                      {
     while (true)
     {
       generateMassive();
@@ -42,15 +54,9 @@ public:
       m_pQueueMutex->lock();
       m_pQueue->push(Hc1);
       m_pQueueMutex->unlock();
-      std::this_thread::sleep_for(std::chrono::seconds(1));
-    };
-  };
-
-  // запускаем поток девайса
-  void start()
-  {
-    std::thread t_listen(&device::listen, this);
-    t_listen.detach();
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    } });
+    start.detach();
   };
 
   // в конструктор передаем ИД девайса

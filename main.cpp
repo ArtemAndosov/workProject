@@ -130,14 +130,14 @@ void parseTable(std::vector<hardwareRaw> &Raw)
 void LoadConfig()
 {
 
-  // создали девайсроу
+  // заполняем девайсроу
 
   parseTable(deviceRaws);
 
-  // cоздаем евентроу
+  // заполняем евентроу
   parseTable(eventRaws);
 
-  // cоздаем евентроу
+  // заполняем hardwareRaw
   parseTable(hardWares);
 
   // создали девайсы
@@ -151,7 +151,7 @@ void LoadConfig()
   // запускаем девайсы
   for (size_t i = 0; i < devices.size(); i++)
   {
-    devices[i].start();
+    devices[i].listen();
   }
 
   // создали ActionIn
@@ -191,8 +191,10 @@ void LoadConfig()
   }
 }
 
-void thr() // поехал основной процессs
+void thr() // поехал основной процесс в потоке
 {
+  std::thread start([]()
+                    {
   while (true)
   {
     queueMutex.lock();
@@ -212,5 +214,6 @@ void thr() // поехал основной процессs
       queue.pop();
     }
     queueMutex.unlock();
-  }
+  } });
+  start.join();
 }

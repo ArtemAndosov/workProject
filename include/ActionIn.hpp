@@ -1,6 +1,12 @@
 #pragma once
 #include <Action.hpp>
 #include <mutex>
+/**
+ * @brief Каждый экземпляр привязан к определенному девайсу и эвенту.
+ * Раскидывает ХК из очереди по эвентам
+ *
+ * @tparam HardCommandType
+ */
 template <typename HardCommandType>
 class ActionIn : public Action
 {
@@ -14,7 +20,14 @@ public:
     deleted
   };
   EStatus m_status{EStatus::open};
-
+  /**
+   * @brief проверяет соответствие ИД девайса из конца очереди и своего
+   * при соответствии пишет в себя ХК из очереди и активирует
+   *
+   * @param HC
+   * @return true
+   * @return false
+   */
   bool probePacket(const HardCommand &HC)
   {
     if (m_status == EStatus::open)
