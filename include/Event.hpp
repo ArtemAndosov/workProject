@@ -1,39 +1,56 @@
 #pragma once
 #include <ActionIn.hpp>
-#include <vector>
-#include <mutex>
-#include <string>
+#include <ActionInTime.hpp>
+#include <ActionOut.hpp>
 #include <EventRaw.hpp>
-#include <map>
+#include <includes.hpp>
+
 /**
  * @brief принтует активные ActionIn
- * 
+ *
  */
-class Event
-{
-public:
+class Event {
+ public:
   int m_eventID;
   std::string m_name;
-  eventRaw *m_pEventRaw;
-  std::vector<ActionIn<HardCommand> *> m_actions;
+  eventRaw* m_pEventRaw;
+  std::vector<ActionIn<HardCommand>*> m_actions;
+  std::vector<ActionOut*> m_ActionsOut;
+  std::vector<ActionOut*> m_sendActions;
+  ActionInTime* m_pActionInTime{nullptr};
+  // TODO узнать как работает
+  void logicInTime() {
+    std::cout << "logicInTime activated" << std::endl;
+    m_pActionInTime->m_isDone = true;
+  }
 
+  void logicInInterface() {
+    for (auto& action : m_actions) {
+      if (action->m_isActive == true) {
+        action->m_pLastCommand.m_packet[0] = 0;
+        m_ActionsOut[0]->m_sendCommand = action->m_pLastCommand;
+        m_sendActions.emplace_back(m_ActionsOut.at(0));
+      };
+    };
+  }
   /**
    * @brief для активных ActionIn из своего вектора принтует
    *
    */
-  void probeAction()
-  {
-    for (auto &action : m_actions)
-    {
-      if (action->m_isActive == true)
-      {
-        std::cout << std::asctime(localtime(&(*action).m_pLastCommand.m_time));
-        std::cout << "device name: " << action->m_pDevice->m_deviceName << std::endl;
-        action->m_pLastCommand.print();
-        std::cout << std::endl;
-      };
-    };
+  std::vector<ActionOut*>* probeAction() {
+    if (m_pActionInTime->m_isActive) {
+      logicInTime();
+      m_pActionInTime->m_isActive = false;
+    } else {
+      logicInInterface();
+    }
+    return &m_sendActions;
   };
-  Event(eventRaw &ERaw) : m_name{ERaw.m_eventName}, m_pEventRaw{&ERaw} {};
+
+  // первоначальная настройка переменных
+  void setupPlugin() {
+
+  };
+  Event(eventRaw& ERaw) : m_name{ERaw.m_eventName}, m_pEventRaw{&ERaw} {};
   ~Event() = default;
 };

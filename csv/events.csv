@@ -1,3 +1,3 @@
 name,timeStart,parameters
-testEvent1,0,testParamEv1
-testEvent2,5,testParamEv2
+testEvent1,5,testParamEv1
+testEvent2,0,testParamEv2

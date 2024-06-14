@@ -1,5 +1,6 @@
 #pragma once
 #include <Action.hpp>
+#include <includes.hpp>
 #include <mutex>
 /**
  * @brief Каждый экземпляр привязан к определенному девайсу и эвенту.
@@ -8,17 +9,10 @@
  * @tparam HardCommandType
  */
 template <typename HardCommandType>
-class ActionIn : public Action
-{
-public:
+class ActionIn : public Action {
+ public:
   HardCommandType m_pLastCommand;
-  enum class EStatus : uint8_t
-  {
-    open,
-    closed,
-    sleep,
-    deleted
-  };
+  enum class EStatus : uint8_t { open, closed, sleep, deleted };
   EStatus m_status{EStatus::open};
   /**
    * @brief проверяет соответствие ИД девайса из конца очереди и своего
@@ -28,13 +22,11 @@ public:
    * @return true
    * @return false
    */
-  bool probePacket(const HardCommand &HC)
-  {
-    if (m_status == EStatus::open)
-    {
-      if (HC.m_pDevice->m_deviceName == m_pDevice->m_deviceName) // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
+  bool probePacket(const HardCommand& HC) {
+    if (m_status == EStatus::open) {
+      if (HC.m_pDevice->m_deviceName == m_pDevice->m_deviceName)  // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
       {
-        m_pLastCommand = HC; // Пишем ХК в Актион в евенте
+        m_pLastCommand = HC;  // Пишем ХК в Актион в евенте
         m_isActive = true;
         return true;
       }
@@ -42,10 +34,10 @@ public:
     };
     return false;
   }
-  ActionIn(hardwareRaw &Raw)
-  {
-    this->m_eventName = Raw.m_eventName;
-    this->m_pHardWareRaw = &Raw;
+  ActionIn(hardwareRaw& raw) {
+    this->m_interface = raw.m_pDeviceRaw->m_interface;
+    this->m_eventName = raw.m_eventName;
+    this->m_pHardWareRaw = &raw;
   };
 
   ~ActionIn() = default;
