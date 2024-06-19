@@ -4,7 +4,7 @@
 # compile CXX with /bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/home/artem/workspace/work (1-я копия)/include"
+CXX_INCLUDES = -I"/home/artem/workspace/task 1/include"
 
 CXX_FLAGS =   -O3 -Wall -pedantic -fPIC -c -W -std=c++17
 

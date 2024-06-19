@@ -12,8 +12,7 @@ template <typename HardCommandType>
 class ActionIn : public Action {
  public:
   HardCommandType m_pLastCommand;
-  enum class EStatus : uint8_t { open, closed, sleep, deleted };
-  EStatus m_status{EStatus::open};
+  
   /**
    * @brief проверяет соответствие ИД девайса из конца очереди и своего
    * при соответствии пишет в себя ХК из очереди и активирует

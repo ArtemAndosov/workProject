@@ -1,12 +1,11 @@
-CMakeFiles/start.dir/main.cpp.o: \
- /home/artem/workspace/work\ (1-я\ копия)/main.cpp \
+CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/task\ 1/main.cpp \
  /usr/include/stdc-predef.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/Event.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/ActionIn.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/Action.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/HardwareRaw.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/deviceRaw.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/includes.hpp \
+ /home/artem/workspace/task\ 1/include/Event.hpp \
+ /home/artem/workspace/task\ 1/include/ActionIn.hpp \
+ /home/artem/workspace/task\ 1/include/Action.hpp \
+ /home/artem/workspace/task\ 1/include/HardwareRaw.hpp \
+ /home/artem/workspace/task\ 1/include/deviceRaw.hpp \
+ /home/artem/workspace/task\ 1/include/includes.hpp \
  /usr/include/c++/14.1.1/chrono \
  /usr/include/c++/14.1.1/bits/requires_hosted.h \
  /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -173,7 +172,7 @@ CMakeFiles/start.dir/main.cpp.o: \
  /usr/include/c++/14.1.1/bits/std_thread.h \
  /usr/include/c++/14.1.1/bits/unique_ptr.h \
  /usr/include/c++/14.1.1/bits/this_thread_sleep.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidcsv.h \
+ /home/artem/workspace/task\ 1/include/rapidcsv.h \
  /usr/include/c++/14.1.1/algorithm \
  /usr/include/c++/14.1.1/bits/stl_algo.h \
  /usr/include/c++/14.1.1/bits/algorithmfwd.h \
@@ -222,16 +221,16 @@ CMakeFiles/start.dir/main.cpp.o: \
  /usr/include/c++/14.1.1/bits/locale_conv.h \
  /usr/include/c++/14.1.1/bits/quoted_string.h \
  /usr/include/c++/14.1.1/sstream /usr/include/c++/14.1.1/bits/sstream.tcc \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/document.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/reader.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/allocators.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/rapidjson.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/document.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/reader.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/allocators.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/rapidjson.h \
  /usr/include/c++/14.1.1/cstring /usr/include/string.h \
  /usr/include/strings.h /usr/include/inttypes.h \
  /usr/include/c++/14.1.1/utility \
  /usr/include/c++/14.1.1/bits/stl_relops.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/meta.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/../rapidjson.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/meta.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/../rapidjson.h \
  /usr/include/c++/14.1.1/memory \
  /usr/include/c++/14.1.1/bits/stl_raw_storage_iter.h \
  /usr/include/c++/14.1.1/bits/align.h \
@@ -244,20 +243,20 @@ CMakeFiles/start.dir/main.cpp.o: \
  /usr/include/c++/14.1.1/bits/atomic_lockfree_defines.h \
  /usr/include/c++/14.1.1/backward/auto_ptr.h \
  /usr/include/c++/14.1.1/pstl/glue_memory_defs.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/stream.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/encodings.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/encodedstream.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/memorystream.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/clzll.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/stack.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/../allocators.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/swap.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/strtod.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/ieee754.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/biginteger.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/diyfp.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/clzll.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/pow10.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/stream.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/encodings.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/encodedstream.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/memorystream.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/clzll.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/stack.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/../allocators.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/swap.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/strtod.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/ieee754.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/biginteger.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/diyfp.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/clzll.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/pow10.h \
  /usr/include/c++/14.1.1/climits \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.1.1/include/limits.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14.1.1/include/syslimits.h \
@@ -265,21 +264,21 @@ CMakeFiles/start.dir/main.cpp.o: \
  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
  /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
  /usr/include/bits/uio_lim.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/error/error.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/error/../rapidjson.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/strfunc.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/../stream.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/../rapidjson.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/error/error.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/error/../rapidjson.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/strfunc.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/../stream.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/../rapidjson.h \
  /usr/include/c++/14.1.1/iterator \
  /usr/include/c++/14.1.1/bits/stream_iterator.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/stringbuffer.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/writer.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/dtoa.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/itoa.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/internal/itoa.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/rapidjson/stringbuffer.h \
- /home/artem/workspace/work\ (1-я\ копия)/include/device.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/HardCommand.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/ActionInTime.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/ActionOut.hpp \
- /home/artem/workspace/work\ (1-я\ копия)/include/EventRaw.hpp
+ /home/artem/workspace/task\ 1/include/rapidjson/stringbuffer.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/writer.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/dtoa.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/itoa.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/internal/itoa.h \
+ /home/artem/workspace/task\ 1/include/rapidjson/stringbuffer.h \
+ /home/artem/workspace/task\ 1/include/device.hpp \
+ /home/artem/workspace/task\ 1/include/HardCommand.hpp \
+ /home/artem/workspace/task\ 1/include/ActionInTime.hpp \
+ /home/artem/workspace/task\ 1/include/ActionOut.hpp \
+ /home/artem/workspace/task\ 1/include/EventRaw.hpp

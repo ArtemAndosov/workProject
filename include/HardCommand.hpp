@@ -13,7 +13,7 @@ class HardCommand {
 
   void print() {
     for (size_t i = 0; i < m_packet.size(); i++) {
-      std::cout << m_packet.at(i);
+      std::cout << m_packet.at(i) << ",";
     }
     std::cout << std::endl;
   };

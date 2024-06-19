@@ -16,6 +16,8 @@ class Action {
   device* m_pDevice;
   hardwareRaw* m_pHardWareRaw;
   g_EInterfaceType m_interface{g_EInterfaceType::ERROR};
+  enum class EStatus : uint8_t { open, closed, sleep, deleted };
+  EStatus m_status{EStatus::closed};
 
   Action() = default;
   ~Action() = default;

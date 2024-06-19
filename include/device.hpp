@@ -21,7 +21,7 @@ class device {
   void generateMassive() {
     std::srand(time(0));
     for (int i = 0; i < 10; i++)
-      m_array[i] = 1 + rand() % 5;
+      m_array[i] = 1 + rand() % 20;
   };
 
   /**

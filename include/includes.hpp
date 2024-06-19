@@ -22,6 +22,7 @@ std::map<std::string, g_EInterfaceType> StringToEnum{{"ERROR", g_EInterfaceType:
                                                      {"UDP", g_EInterfaceType::UDP},
                                                      {"TIME", g_EInterfaceType::TIME}};
 
+// как долго работает программа
 uint64_t getTime() {
   uint64_t now = std::chrono::nanoseconds(std::chrono::system_clock::now().time_since_epoch()).count();
   uint64_t getTime = now - programmStartTime_ns;

@@ -1,4 +1,2 @@
 name,interface,path,port
 testDevice1,COM,/dev/ttyS0,0
-testDevice2,MAC,,0
-testDevice3,UDP,,1001

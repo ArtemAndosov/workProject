@@ -50,7 +50,6 @@ void parseTable(std::vector<eventRaw>& Raw) {
     std::string parameters = doc.GetCell<std::string>("parameters", i);
     Raw[i].m_parametersName = parameters;
   }
-
   rapidcsv::Document parametersEv("../csv/paramEv.csv", rapidcsv::LabelParams(0, -1));
   for (size_t i = 0; i < parametersEv.GetRowCount(); i++) {
     std::string json = parametersEv.GetCell<std::string>("parameters", i);
@@ -122,7 +121,6 @@ void LoadConfig() {
   // заполняем девайсроу
 
   parseTable(deviceRaws);
-
   // заполняем евентроу
   parseTable(eventRaws);
 
@@ -177,16 +175,22 @@ void LoadConfig() {
     events.emplace_back(Event(eventRaws[i]));
     events[i].m_eventID = i;
   }
+  //  static array y event
+  for (auto& i : events) {
+    if (i.m_pEventRaw->m_parameters["MODE"][0] == "EXCHANGE")
+      i.m_spArrayOut = &i.m_pEventRaw->m_parameters["ARRAY"];
+  }
+
   // создали actionsInTime
   for (size_t i = 0; i < events.size(); i++) {
     actionsInTime.emplace_back();
-    // TODO nanosec
   }
   for (size_t i = 0; i < events.size(); i++) {
     events[i].m_pActionInTime = &actionsInTime[i];
     actionsInTime[i].m_eventID = i;
+    actionsInTime[i].m_status = Action::EStatus::open;
     actionsInTime[i].m_eventName = events[i].m_name;
-    actionsInTime[i].m_timeStart_ns = events[i].m_pEventRaw->m_timeStart * 1000000000;  // TODO nanosec
+    actionsInTime[i].m_timeStart_ns = events[i].m_pEventRaw->m_timeStart * 1000000000;
   }
   // ссвязали ActionIn и эвенты
   for (size_t i = 0; i < actionsIn.size(); i++) {
@@ -214,6 +218,7 @@ void thr()  // поехал основной процесс интерфейса
     queueMutex.lock();
     if (!queue.empty()) {
       for (auto& action : actionsIn) {
+        action.m_status = Action::EStatus::open;
         if (action.probePacket(queue.front())) {
           eventMutex.lock();
           auto result = events[action.m_eventID].probeAction();
@@ -221,6 +226,7 @@ void thr()  // поехал основной процесс интерфейса
           eventMutex.unlock();
           action.m_isActive = false;
         }
+        action.m_status = Action::EStatus::closed;
       }
       queue.pop();
     }
@@ -248,4 +254,5 @@ void thrReactions(std::vector<ActionOut*>* result) {
   for (auto& i : *result) {
     i->sendData();
   }
+  result->clear();
 }
