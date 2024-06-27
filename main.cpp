@@ -175,11 +175,6 @@ void LoadConfig() {
     events.emplace_back(Event(eventRaws[i]));
     events[i].m_eventID = i;
   }
-  //  static array y event
-  for (auto& i : events) {
-    if (i.m_pEventRaw->m_parameters["MODE"][0] == "EXCHANGE")
-      i.m_spArrayOut = &i.m_pEventRaw->m_parameters["ARRAY"];
-  }
 
   // создали actionsInTime
   for (size_t i = 0; i < events.size(); i++) {
@@ -220,13 +215,13 @@ void thr()  // поехал основной процесс интерфейса
       for (auto& action : actionsIn) {
         action.m_status = Action::EStatus::open;
         if (action.probePacket(queue.front())) {
+          action.m_status = Action::EStatus::closed;
           eventMutex.lock();
           auto result = events[action.m_eventID].probeAction();
           thrReactions(result);
           eventMutex.unlock();
           action.m_isActive = false;
         }
-        action.m_status = Action::EStatus::closed;
       }
       queue.pop();
     }
@@ -238,13 +233,17 @@ void thrTime()  // поехал основной процесс по време�
 {
   while (true) {
     for (auto& action : actionsInTime) {
+      // action.m_status = Action::EStatus::open;
       if (action.probeTime()) {
+        // action.m_status = Action::EStatus::closed;
         eventMutex.lock();
         auto result = events[action.m_eventID].probeAction();
+
         thrReactions(result);
         eventMutex.unlock();
-        action.m_isActive = false;
+        // action.m_isActive = false;
       }
+      // action.m_status = Action::EStatus::closed;
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   };

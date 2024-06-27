@@ -46,7 +46,8 @@ class device {
 
   void sendData(HardCommand HC) {
     std::cout << std::asctime(localtime(&HC.m_time));
-    std::cout << "device name: " << HC.m_pDevice->m_deviceName << std::endl;
+    // std::cout << "device name: " << HC.m_pDevice->m_deviceName << std::endl;
+    std::cout << " cp 5" << std::endl;
     HC.print();
     std::cout << std::endl;
   };

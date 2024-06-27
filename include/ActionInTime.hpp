@@ -19,7 +19,7 @@ class ActionInTime : public Action {
 
   void setTimeOutOn(uint64_t timeout) {
     m_timeStart_ns = getTime() + timeout * 1000000000;
-   // m_status == EStatus::open;
+    m_status == EStatus::open;
     m_isActive = true;
   }
 

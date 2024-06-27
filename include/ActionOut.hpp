@@ -7,7 +7,9 @@ class ActionOut : public Action {
  public:
   device* m_pDevice;
   HardCommand m_sendCommand;
+
   void sendData() { m_pDevice->sendData(m_sendCommand); };
+
   ActionOut(hardwareRaw& raw) {
     this->m_interface = raw.m_pDeviceRaw->m_interface;
     this->m_eventName = raw.m_eventName;
