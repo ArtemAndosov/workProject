@@ -45,12 +45,11 @@ class device {
   };
 
   void sendData(HardCommand HC) {
-    std::cout << std::asctime(localtime(&HC.m_time));
-    // std::cout << "device name: " << HC.m_pDevice->m_deviceName << std::endl;
-    std::cout << " cp 5" << std::endl;
-    HC.print();
     std::cout << std::endl;
-  };
+    std::cout << std::asctime(localtime(&HC.m_time));
+    std::cout << "device name: " << HC.m_pDevice->m_deviceName << std::endl;
+    HC.print();
+    };
 
   // в конструктор передаем ИД девайса
   device(deviceRaw& dev) : m_pDeviceRaw{&dev} { this->m_deviceName = dev.m_deviceName; };

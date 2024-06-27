@@ -238,7 +238,6 @@ void thrTime()  // поехал основной процесс по време�
         // action.m_status = Action::EStatus::closed;
         eventMutex.lock();
         auto result = events[action.m_eventID].probeAction();
-
         thrReactions(result);
         eventMutex.unlock();
         // action.m_isActive = false;

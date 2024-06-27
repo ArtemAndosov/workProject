@@ -18,6 +18,9 @@ class HardCommand {
     std::cout << std::endl;
   };
 
-  HardCommand() { m_time = std::time(NULL); };
+  HardCommand() {
+    this->m_time = std::time(NULL);
+    this->m_packet = std::vector<int>(10);
+  };
   ~HardCommand() = default;
 };
