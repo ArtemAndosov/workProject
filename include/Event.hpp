@@ -11,29 +11,26 @@
  */
 class Event {
  public:
-  inline static std::vector<int> m_spArrayOut;
-  int m_eventID{0};
-  int m_wordNumber{0};  // номер слова которое меняем
-  int m_value{0};       // значение на которое меняем слово
-  enum class EeventType { EXCHANGE, CHANGE_DATA };
-  EeventType m_eventType{};
-  uint64_t m_endTime{0};         // длительность события
-  uint64_t m_cyclePeriodSec{0};  // частота перезахода в событие
-  std::string m_name;
-  eventRaw* m_pEventRaw;
-  std::vector<ActionIn<HardCommand>*> m_actions;
-  std::vector<ActionOut*> m_ActionsOut;
-  std::vector<ActionOut*> m_sendActions;
-  ActionInTime* m_pActionInTime{nullptr};
+  inline static std::vector<ActionOut*>* m_spActionsOut;  //!< указатель на m_ActionsOut события EXCHANGE
+  int m_eventID{0};                                       //!< ИД события
+  int m_wordNumber{0};                                    //!< номер слова которое меняем в событии типа CHANGE_DATA
+  int m_value{0};                                         //!< значение на которое меняем слово в событии типа CHANGE_DATA
+  enum class EeventType { EXCHANGE, CHANGE_DATA };        //!< список типов событий
+  EeventType m_eventType{};                               //!< тип текушего события
+  uint64_t m_endTime{0};                                  //!< длительность события EXCHANGE
+  uint64_t m_cyclePeriodSec{0};                           //!< частота перезахода в событие EXCHANGE
+  std::string m_name;                                     //!< имя события
+  eventRaw* m_pEventRaw;                                  //!< указатель на класс с исходными данными для текущего события
+  std::vector<ActionIn<HardCommand>*> m_actions;          //!< список связанных с текущим событием ActionIn"ов
+  std::vector<ActionOut*> m_ActionsOut;                   //!< список связанных с текущим событием ActionOut"ов
+  std::vector<ActionOut*> m_sendActions;                  //!< список исходящих ActionOut"ов для дальнейшего исполнения
+  ActionInTime* m_pActionInTime{nullptr};                 //!< указатель на связанный с текущим событием ActionInTime
   /**
    * @brief логика события при входе по времени
    *
    */
   void logicInTime() {
     if (m_eventType == EeventType::EXCHANGE) {
-      for (size_t i = 0; i < m_spArrayOut.size(); i++) {
-        m_ActionsOut[0]->m_sendCommand.m_packet[i] = m_spArrayOut[i];
-      }
       m_sendActions.emplace_back(m_ActionsOut.at(0));
 
       if (getTime() <= m_endTime) {
@@ -43,7 +40,7 @@ class Event {
         m_pActionInTime->m_status = Action::EStatus::closed;
       m_pActionInTime->m_isActive = false;
     } else if (m_eventType == EeventType::CHANGE_DATA) {
-      m_spArrayOut[m_wordNumber] = this->m_value;
+      (*(m_spActionsOut))[0]->m_sendCommand.m_packet[m_wordNumber] = this->m_value;
       m_pActionInTime->m_isActive = false;
       m_pActionInTime->m_status = Action::EStatus::closed;
     };
@@ -67,6 +64,7 @@ class Event {
   /**
    * @brief вызывает логику события
    *
+   * @return std::vector<ActionOut*>*  указатель на список
    */
   std::vector<ActionOut*>* probeAction() {
     m_sendActions.clear();
@@ -84,13 +82,13 @@ class Event {
    */
   void setupPlugin() {
     if (this->m_pEventRaw->m_parameters["MODE"][0] == "EXCHANGE") {
+      m_spActionsOut = &this->m_ActionsOut;
       m_actions[0]->m_status = Action::EStatus::open;
 
-      m_spArrayOut.resize(m_pEventRaw->m_parameters["ARRAY"].size());
+      m_ActionsOut[0]->m_sendCommand.m_packet.resize(m_pEventRaw->m_parameters["ARRAY"].size());
       for (size_t i = 0; i < m_pEventRaw->m_parameters["ARRAY"].size(); i++) {
-        m_spArrayOut[i] = std::stoi(m_pEventRaw->m_parameters["ARRAY"][i], nullptr, 16);
+        m_ActionsOut[0]->m_sendCommand.m_packet[i] = std::stoi(m_pEventRaw->m_parameters["ARRAY"][i], nullptr, 16);
       }
-      m_ActionsOut[0]->m_sendCommand.m_packet.resize(m_spArrayOut.size());
       m_endTime = std::stoul(this->m_pEventRaw->m_parameters["TIME"][0]) * 1000000000;
       m_cyclePeriodSec = std::stoi(this->m_pEventRaw->m_parameters["CYCLE_PERIOD_S"][0]);
       m_eventType = EeventType::EXCHANGE;
@@ -101,6 +99,15 @@ class Event {
       m_value = std::stoi(this->m_pEventRaw->m_parameters["VALUE"][0], nullptr, 16);
     }
   };
+  /**
+   * @brief Construct a new Event object
+   *
+   * @param ERaw ссылка на класс с исходными данными
+   */
   Event(eventRaw& ERaw) : m_name{ERaw.m_eventName}, m_pEventRaw{&ERaw} {};
+  /**
+   * @brief Destroy the Event object
+   *
+   */
   ~Event() = default;
 };

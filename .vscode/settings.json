@@ -72,4 +72,8 @@
         "regex": "cpp",
         "valarray": "cpp"
     },
+    "editor.tokenColorCustomizations": {
+        "comments": "",
+        "textMateRules": []
+    },
 }
