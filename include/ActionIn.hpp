@@ -12,7 +12,7 @@ template <typename HardCommandType>
 class ActionIn : public Action {
  public:
   HardCommandType m_pLastCommand;
-  
+
   /**
    * @brief проверяет соответствие ИД девайса из конца очереди и своего
    * при соответствии пишет в себя ХК из очереди и активирует
@@ -22,11 +22,12 @@ class ActionIn : public Action {
    * @return false
    */
   bool probePacket(const HardCommand& HC) {
-    if (m_status == EStatus::open) {
+        if (m_status == EStatus::open) {
       if (HC.m_pDevice->m_deviceName == m_pDevice->m_deviceName)  // если ИД девайса ХК в очереди совпал с ИД девайса в АктионИне
       {
         m_pLastCommand = HC;  // Пишем ХК в Актион в евенте
         m_isActive = true;
+        m_status = Action::EStatus::closed;
         return true;
       }
       return false;

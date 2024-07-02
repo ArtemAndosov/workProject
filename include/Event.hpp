@@ -11,9 +11,12 @@
  */
 class Event {
  public:
-  inline static std::vector<std::string>* m_spArrayOut;  //
+  inline static std::vector<int> m_spArrayOut;
   int m_eventID{0};
-  bool m_eventType{false};       // false - EXCHANGE,  true - CHANGE_DATA;
+  int m_wordNumber{0};  // номер слова которое меняем
+  int m_value{0};       // значение на которое меняем слово
+  enum class EeventType { EXCHANGE, CHANGE_DATA };
+  EeventType m_eventType{};
   uint64_t m_endTime{0};         // длительность события
   uint64_t m_cyclePeriodSec{0};  // частота перезахода в событие
   std::string m_name;
@@ -27,19 +30,20 @@ class Event {
    *
    */
   void logicInTime() {
-    if (!m_eventType) {
-      for (size_t i = 0; i < m_spArrayOut->size(); i++) {
-        m_ActionsOut[0]->m_sendCommand.m_packet[i] = std::stoi((*(m_spArrayOut))[i], nullptr, 16);
+    if (m_eventType == EeventType::EXCHANGE) {
+      for (size_t i = 0; i < m_spArrayOut.size(); i++) {
+        m_ActionsOut[0]->m_sendCommand.m_packet[i] = m_spArrayOut[i];
       }
       m_sendActions.emplace_back(m_ActionsOut.at(0));
+
       if (getTime() <= m_endTime) {
         m_pActionInTime->setTimeOutOn(m_cyclePeriodSec);
+        m_pActionInTime->m_status = Action::EStatus::open;
       } else
         m_pActionInTime->m_status = Action::EStatus::closed;
       m_pActionInTime->m_isActive = false;
-    } else {
-      (*m_spArrayOut)[std::stoi(this->m_pEventRaw->m_parameters["WORD"][0])] = this->m_pEventRaw->m_parameters["VALUE"][0];
-      std::cout << std::endl;
+    } else if (m_eventType == EeventType::CHANGE_DATA) {
+      m_spArrayOut[m_wordNumber] = this->m_value;
       m_pActionInTime->m_isActive = false;
       m_pActionInTime->m_status = Action::EStatus::closed;
     };
@@ -56,6 +60,7 @@ class Event {
           std::printf("%x", action->m_pLastCommand.m_packet[i]);
         }
         std::cout << std::endl;
+        action->m_status = Action::EStatus::open;
       };
     };
   }
@@ -64,6 +69,7 @@ class Event {
    *
    */
   std::vector<ActionOut*>* probeAction() {
+    m_sendActions.clear();
     if (m_pActionInTime->m_isActive) {
       logicInTime();
     } else {
@@ -78,12 +84,22 @@ class Event {
    */
   void setupPlugin() {
     if (this->m_pEventRaw->m_parameters["MODE"][0] == "EXCHANGE") {
-      this->m_spArrayOut = &this->m_pEventRaw->m_parameters["ARRAY"];
-      m_ActionsOut[0]->m_sendCommand.m_packet.resize(m_spArrayOut->size());
-      this->m_endTime = std::stoul(this->m_pEventRaw->m_parameters["TIME"][0]) * 1000000000;
+      m_actions[0]->m_status = Action::EStatus::open;
+
+      m_spArrayOut.resize(m_pEventRaw->m_parameters["ARRAY"].size());
+      for (size_t i = 0; i < m_pEventRaw->m_parameters["ARRAY"].size(); i++) {
+        m_spArrayOut[i] = std::stoi(m_pEventRaw->m_parameters["ARRAY"][i], nullptr, 16);
+      }
+      m_ActionsOut[0]->m_sendCommand.m_packet.resize(m_spArrayOut.size());
+      m_endTime = std::stoul(this->m_pEventRaw->m_parameters["TIME"][0]) * 1000000000;
       m_cyclePeriodSec = std::stoi(this->m_pEventRaw->m_parameters["CYCLE_PERIOD_S"][0]);
-    } else
-      this->m_eventType = true;
+      m_eventType = EeventType::EXCHANGE;
+
+    } else {
+      m_eventType = EeventType::CHANGE_DATA;
+      m_wordNumber = std::stoi(this->m_pEventRaw->m_parameters["WORD"][0]);
+      m_value = std::stoi(this->m_pEventRaw->m_parameters["VALUE"][0], nullptr, 16);
+    }
   };
   Event(eventRaw& ERaw) : m_name{ERaw.m_eventName}, m_pEventRaw{&ERaw} {};
   ~Event() = default;
