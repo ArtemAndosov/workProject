@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/artem/workspace/task 1/build",
+  "command": "/bin/c++  -I\"/home/artem/workspace/task 1/include\" -g   -O3 -Wall -pedantic -fPIC -c -W -std=c++17 -o CMakeFiles/start.dir/main.cpp.o -c \"/home/artem/workspace/task 1/main.cpp\"",
+  "file": "/home/artem/workspace/task 1/main.cpp",
+  "output": "CMakeFiles/start.dir/main.cpp.o"
+}
+]

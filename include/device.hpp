@@ -8,11 +8,11 @@
  */
 class device {
  public:
-  std::mutex* m_pQueueMutex{nullptr};
-  std::queue<HardCommand>* m_pQueue{nullptr};
-  deviceRaw* m_pDeviceRaw;
-  std::string m_deviceName;
-  int m_array[10];
+  std::mutex* m_pQueueMutex{nullptr};          //!< Указатель на очередь мьютекс в мейне
+  std::queue<HardCommand>* m_pQueue{nullptr};  //!< Указатель на очередь ХК в мейне
+  deviceRaw* m_pDeviceRaw;                     //!< Указатель на класс с исходными данными
+  std::string m_deviceName;                    //!< Имя девайса
+  int m_array[10];                             //!< Условный пакет
 
   /**
    * @brief генерирует массив случ.чисел(пакет)
@@ -43,15 +43,27 @@ class device {
     });
     start.detach();
   };
-
+  /**
+   * @brief Принтует(условно получает) полученный(от ActionOut) пакет
+   *
+   * @param HC
+   */
   void sendData(HardCommand HC) {
     std::cout << std::endl;
     std::cout << std::asctime(localtime(&HC.m_time));
     std::cout << "device name: " << HC.m_pDevice->m_deviceName << std::endl;
     HC.print();
-    };
+  };
 
-  // в конструктор передаем ИД девайса
+  /**
+   * @brief Construct a new device object
+   *
+   * @param dev ссылка на класс с исходными данными
+   */
   device(deviceRaw& dev) : m_pDeviceRaw{&dev} { this->m_deviceName = dev.m_deviceName; };
+  /**
+   * @brief Destroy the device object
+   *
+   */
   ~device() = default;
 };

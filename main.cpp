@@ -1,24 +1,61 @@
 #include <Event.hpp>
 #include <includes.hpp>
 
-std::mutex queueMutex;
-std::mutex eventMutex;
-std::queue<HardCommand> queue;
-std::vector<deviceRaw> deviceRaws;
-std::vector<device> devices;
-std::vector<eventRaw> eventRaws;
-std::vector<Event> events;
-std::vector<hardwareRaw> hardWares;
-std::vector<ActionIn<HardCommand>> actionsIn;
-std::vector<ActionOut> actionsOut;
-std::vector<ActionInTime> actionsInTime;
-
+std::mutex queueMutex;                         //!< мьютекс для очереди
+std::mutex eventMutex;                         //!< мьютекс для собития
+std::queue<HardCommand> queue;                 //!< очередь ХК(пакетов)
+std::vector<deviceRaw> deviceRaws;             //!< список исходников девайсов
+std::vector<device> devices;                   //!< список девайсов
+std::vector<eventRaw> eventRaws;               //!< список исходников событий
+std::vector<Event> events;                     //!< список событий
+std::vector<hardwareRaw> hardWares;            //!< список исходников action
+std::vector<ActionIn<HardCommand>> actionsIn;  //!< список action для входа по интерфейсу
+std::vector<ActionInTime> actionsInTime;       //!< список action для входа по времени
+std::vector<ActionOut> actionsOut;             //!< список action для выхода
+/**
+ * @brief парсинг событий и их параметров из .csv
+ *
+ * @param Raw список в который пишем исходники событий
+ */
 void parseTable(std::vector<eventRaw>& Raw);
+
+/**
+ * @brief парсинг параметров девайсов из .csv
+ *
+ * @param Raw список исходников девайсов
+ */
 void parseTable(std::vector<deviceRaw>& Raw);
+
+/**
+ * @brief парсинг параметров action из .csv
+ *
+ * @param Raw список исходников action
+ */
 void parseTable(std::vector<hardwareRaw>& Raw);
+
+/**
+ * @brief вызываем все парсинги, связываем все что связывается, пихаем в вектора и прочая первичная настройка
+ *
+ */
 void LoadConfig();
+
+/**
+ * @brief Вызывает(у девайса) функцию отправки ХК от события в девайса
+ *
+ * @param result Список actionOut"ов с готовыми для отправки в девайс пакетами
+ */
 void thrReactions(std::vector<ActionOut*>* result);
+
+/**
+ * @brief основной поток обработки событий с входом по интерфейсу
+ *
+ */
 void thr();
+
+/**
+ * @brief основной поток обработки событий с входом по времени
+ *
+ */
 void thrTime();
 
 int main() {
