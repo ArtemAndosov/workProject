@@ -18,39 +18,11 @@ class Event {
   std::vector<ActionOut*> m_ActionsOut;           //!< список связанных с текущим событием ActionOut"ов
   std::vector<ActionOut*> m_sendActions;          //!< список исходящих ActionOut"ов для дальнейшего исполнения
   ActionInTime* m_pActionInTime{nullptr};         //!< указатель на связанный с текущим событием ActionInTime
-  /**
-   * @brief логика события при входе по времени
-   *
-   */
-  void logicInTime() {}
-  /**
-   * @brief логика события при входе через интерфейс
-   *
-   */
-  void logicInInterface() {}
-  /**
-   * @brief вызывает логику события
-   *
-   * @return std::vector<ActionOut*>*  указатель на список
-   */
-  std::vector<ActionOut*>* probeAction() {
-    m_sendActions.clear();
-    return &m_sendActions;
-  };
 
-  /**
-   * @brief вторичная настройка переменных перед запуском программы
-   *
-   */
-  void setupPlugin() {
-
-  };
   /**
    * @brief Construct a new Event object
    *
-   * @param ERaw ссылка на класс с исходными данными
    */
-
   Event() = default;
   /**
    * @brief Destroy the Event object
