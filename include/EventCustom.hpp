@@ -20,7 +20,23 @@ class EventCustom : public Event {
    * @brief логика события при входе через интерфейс
    *
    */
-  void logicInInterface() {}
+  void logicInInterface() {
+    for (auto& action : m_actions) {
+      if (action->m_isActive == true) {
+        std::cout << std::endl;
+        for (size_t i = 0; i < action->m_pLastCommand.m_packet.size(); i++) {
+          std::printf("%x", action->m_pLastCommand.m_packet[i]);
+        }
+        std::cout << std::endl;
+        action->m_status = Action::EStatus::open;
+      };
+    };
+  }
+  /**
+   * @brief
+   *
+   * @return std::vector<ActionOut*>*
+   */
   std::vector<ActionOut*>* probeAction() {
     m_sendActions.clear();
     if (m_pActionInTime->m_isActive) {

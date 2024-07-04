@@ -1,4 +1,4 @@
-# Install script for directory: /home/artem/workspace/task 1
+# Install script for directory: /home/artem/workspace/tasks
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/artem/workspace/task 1/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/artem/workspace/tasks/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

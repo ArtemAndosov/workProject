@@ -8,11 +8,12 @@
  */
 class device {
  public:
+  int m_packetCounter{0};                      //!< счетчик пакетов (если они предзаданы)
   std::mutex* m_pQueueMutex{nullptr};          //!< Указатель на очередь мьютекс в мейне
   std::queue<HardCommand>* m_pQueue{nullptr};  //!< Указатель на очередь ХК в мейне
   deviceRaw* m_pDeviceRaw;                     //!< Указатель на класс с исходными данными
   std::string m_deviceName;                    //!< Имя девайса
-  int m_array[10];                             //!< Условный пакет
+  int m_array[11];                             //!< Условный пакет
 
   /**
    * @brief генерирует массив случ.чисел(пакет)
@@ -23,6 +24,10 @@ class device {
     for (int i = 0; i < 10; i++)
       m_array[i] = 1 + rand() % 20;
   };
+  void generateMassive(std::vector<int>& packet) {
+    for (size_t i = 0; i < sizeof(m_array); i++)
+      m_array[i] = packet[i];
+  };
 
   /**
    * @brief заполняет HardCommand и добавляет в очередь раз в секунду
@@ -31,7 +36,9 @@ class device {
   void listen() {
     std::thread start([this]() {
       while (true) {
-        generateMassive();
+        // generateMassive();  // для генерации случайного массива
+        device::generateMassive(m_pDeviceRaw->m_packet[m_packetCounter]);  // для получения предзаданного массива
+        m_packetCounter++;
         HardCommand Hc1;
         Hc1.m_pDevice = this->m_pDeviceRaw;
         Hc1.m_packet.assign(m_array, m_array + (std::size(m_array)));
