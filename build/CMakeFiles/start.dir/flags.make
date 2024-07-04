@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I"/home/artem/workspace/task 1/include"
 
-CXX_FLAGS = -g   -O3 -Wall -pedantic -fPIC -c -W -std=c++17
+CXX_FLAGS =   -O3 -Wall -pedantic -fPIC -c -W -std=c++17
 

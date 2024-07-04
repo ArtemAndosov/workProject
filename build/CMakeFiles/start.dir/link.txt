@@ -1,1 +1,1 @@
-/bin/c++ -g CMakeFiles/start.dir/main.cpp.o -o start
+/bin/c++ CMakeFiles/start.dir/main.cpp.o -o start

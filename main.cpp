@@ -1,4 +1,5 @@
 #include <Event.hpp>
+#include <EventCustom.hpp>
 #include <includes.hpp>
 
 std::mutex queueMutex;                         //!< мьютекс для очереди
@@ -7,7 +8,7 @@ std::queue<HardCommand> queue;                 //!< очередь ХК(паке
 std::vector<deviceRaw> deviceRaws;             //!< список исходников девайсов
 std::vector<device> devices;                   //!< список девайсов
 std::vector<eventRaw> eventRaws;               //!< список исходников событий
-std::vector<Event> events;                     //!< список событий
+std::vector<EventCustom> events;               //!< список событий
 std::vector<hardwareRaw> hardWares;            //!< список исходников action
 std::vector<ActionIn<HardCommand>> actionsIn;  //!< список action для входа по интерфейсу
 std::vector<ActionInTime> actionsInTime;       //!< список action для входа по времени
@@ -64,7 +65,6 @@ int main() {
   for (auto& ev : events) {
     ev.setupPlugin();
   }
-
   std::thread start(thr);
   start.detach();
   std::thread startInTime(thrTime);
@@ -209,7 +209,7 @@ void LoadConfig() {
   }
   // создали эвенты
   for (size_t i = 0; i < eventRaws.size(); i++) {
-    events.emplace_back(Event(eventRaws[i]));
+    events.emplace_back(EventCustom(eventRaws[i]));
     events[i].m_eventID = i;
   }
 

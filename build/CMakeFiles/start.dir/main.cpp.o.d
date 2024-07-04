@@ -281,4 +281,5 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/task\ 1/main.cpp \
  /home/artem/workspace/task\ 1/include/HardCommand.hpp \
  /home/artem/workspace/task\ 1/include/ActionInTime.hpp \
  /home/artem/workspace/task\ 1/include/ActionOut.hpp \
- /home/artem/workspace/task\ 1/include/EventRaw.hpp
+ /home/artem/workspace/task\ 1/include/EventRaw.hpp \
+ /home/artem/workspace/task\ 1/include/EventCustom.hpp

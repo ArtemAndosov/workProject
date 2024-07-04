@@ -11,7 +11,7 @@ class Action {
  public:
   int m_eventID;                                                  //!< ИД связанного события
   bool m_isActive{false};                                         //!< Флаг активности
-  std::string m_direction;                                        //!< ActionIn или ActionOut
+  std::string m_direction;                                        //!< определяет ActionIn или ActionOut
   std::string m_eventName;                                        //!< Имя связанного события
   std::string m_address;                                          //!< не используется
   std::string m_port;                                             //!< не используется
