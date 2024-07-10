@@ -1,6 +1,2 @@
 name,parameters
 testParamEv1,"{"MODE":"EXCHANGE", "CYCLE_PERIOD_S":"2", "ARRAY":["FF","FF","FF","FF","FF"], "TIME":"20"}"
-testParamEv2,"{"MODE":"CHANGE_DATA","WORD":"1", "VALUE":"C0"}"
-testParamEv3,"{"MODE":"CHANGE_DATA","WORD":"2", "VALUE":"DE"}"
-testParamEv4,"{"MODE":"CHANGE_DATA","WORD":"3", "VALUE":"AB"}"
-testParamEv5,"{"MODE":"CHANGE_DATA","WORD":"4", "VALUE":"CD"}"

@@ -1,6 +1,2 @@
 name,timeStart,parameters
 testEvent1,0,testParamEv1
-testEvent2,4,testParamEv2
-testEvent3,6,testParamEv3
-testEvent4,14,testParamEv4
-testEvent5,16,testParamEv5

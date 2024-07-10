@@ -1,7 +1,3 @@
 commandName,device,direction,address,port,parameters
 testEvent1,testDevice1,download,,,,
 testEvent1,testDevice1,upload,,,,
-testEvent2,testDevice1,download,,,,
-testEvent3,testDevice1,download,,,,
-testEvent4,testDevice1,download,,,,
-testEvent5,testDevice1,download,,,,

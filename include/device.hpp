@@ -24,6 +24,12 @@ class device {
     for (int i = 0; i < 10; i++)
       m_array[i] = 1 + rand() % 20;
   };
+
+  /**
+   * @brief заполняет массив из готового пакета
+   *
+   * @param packet  вектор предзаданых пакетов
+   */
   void generateMassive(std::vector<int>& packet) {
     for (size_t i = 0; i < sizeof(m_array); i++)
       m_array[i] = packet[i];

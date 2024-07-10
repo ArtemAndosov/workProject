@@ -253,7 +253,7 @@ void thr()  // поехал основной процесс интерфейса
         if (action.probePacket(queue.front())) {
           eventMutex.lock();
           auto result = events[action.m_eventID].probeAction();
-          thrReactions(result);
+                    thrReactions(result);
           eventMutex.unlock();
           action.m_isActive = false;
         }
