@@ -13,7 +13,7 @@ class device {
   std::queue<HardCommand>* m_pQueue{nullptr};  //!< Указатель на очередь ХК в мейне
   deviceRaw* m_pDeviceRaw;                     //!< Указатель на класс с исходными данными
   std::string m_deviceName;                    //!< Имя девайса
-  int m_array[11];                             //!< Условный пакет
+  uint8_t m_array[11];                         //!< Условный пакет
 
   /**
    * @brief генерирует массив случ.чисел(пакет)
@@ -30,7 +30,7 @@ class device {
    *
    * @param packet  вектор предзаданых пакетов
    */
-  void generateMassive(std::vector<int>& packet) {
+  void generateMassive(std::vector<uint8_t>& packet) {
     for (size_t i = 0; i < sizeof(m_array); i++)
       m_array[i] = packet[i];
   };
@@ -51,7 +51,7 @@ class device {
         m_pQueueMutex->lock();
         m_pQueue->push(Hc1);
         m_pQueueMutex->unlock();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
       }
     });
     start.detach();

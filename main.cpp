@@ -26,6 +26,12 @@ void parseTable(std::vector<eventRaw>& Raw);
  * @param Raw список исходников девайсов
  */
 void parseTable(std::vector<deviceRaw>& Raw);
+/**
+ * @brief
+ *
+ * @param fileName парсит пакеты из бинарного файла в нулевой deviceRaw
+ */
+void parsePacket(const std::string fileName);
 
 /**
  * @brief парсинг параметров action из .csv
@@ -133,6 +139,7 @@ void parseTable(std::vector<deviceRaw>& Raw) {
     int port = doc.GetCell<int>("port", i);
     Raw[i].m_port = port;
   };
+  parsePacket("../csv/Ff.dat");
 }
 
 void parseTable(std::vector<hardwareRaw>& Raw) {
@@ -253,7 +260,7 @@ void thr()  // поехал основной процесс интерфейса
         if (action.probePacket(queue.front())) {
           eventMutex.lock();
           auto result = events[action.m_eventID].probeAction();
-                    thrReactions(result);
+          thrReactions(result);
           eventMutex.unlock();
           action.m_isActive = false;
         }
@@ -284,3 +291,21 @@ void thrReactions(std::vector<ActionOut*>* result) {
     i->sendData();
   }
 }
+
+void parsePacket(const std::string fileName) {
+  std::ifstream Fb(fileName, std::ios::binary);
+  std::streampos fileSize;
+  Fb.seekg(0, std::ios::end);
+  fileSize = Fb.tellg();  // =352
+  Fb.seekg(0, std::ios::beg);
+
+  deviceRaws[0].m_packet.resize(fileSize / 11);
+  for (size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
+    deviceRaws[0].m_packet[i].resize(11);
+  }
+
+  for (size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
+    Fb.read((char*)&(deviceRaws[0].m_packet[i][0]), 11);
+  }
+  Fb.close();
+};

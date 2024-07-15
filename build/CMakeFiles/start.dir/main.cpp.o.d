@@ -39,7 +39,7 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/tasks/main.cpp \
  /usr/include/c++/14.1.1/ext/numeric_traits.h \
  /usr/include/c++/14.1.1/bits/cpp_type_traits.h \
  /usr/include/c++/14.1.1/ext/type_traits.h \
- /usr/include/c++/14.1.1/iostream /usr/include/c++/14.1.1/ostream \
+ /usr/include/c++/14.1.1/fstream /usr/include/c++/14.1.1/istream \
  /usr/include/c++/14.1.1/ios /usr/include/c++/14.1.1/iosfwd \
  /usr/include/c++/14.1.1/bits/stringfwd.h \
  /usr/include/c++/14.1.1/bits/memoryfwd.h \
@@ -149,8 +149,13 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/tasks/main.cpp \
  /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/14.1.1/bits/locale_facets.tcc \
  /usr/include/c++/14.1.1/bits/basic_ios.tcc \
- /usr/include/c++/14.1.1/bits/ostream.tcc /usr/include/c++/14.1.1/istream \
- /usr/include/c++/14.1.1/bits/istream.tcc /usr/include/c++/14.1.1/map \
+ /usr/include/c++/14.1.1/ostream /usr/include/c++/14.1.1/bits/ostream.tcc \
+ /usr/include/c++/14.1.1/bits/istream.tcc \
+ /usr/include/c++/14.1.1/bits/codecvt.h \
+ /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/c++io.h \
+ /usr/include/c++/14.1.1/bits/fstream.tcc \
+ /usr/include/c++/14.1.1/iostream /usr/include/c++/14.1.1/map \
  /usr/include/c++/14.1.1/bits/stl_tree.h \
  /usr/include/c++/14.1.1/ext/aligned_buffer.h \
  /usr/include/c++/14.1.1/bits/node_handle.h \
@@ -199,10 +204,6 @@ CMakeFiles/start.dir/main.cpp.o: /home/artem/workspace/tasks/main.cpp \
  /usr/include/c++/14.1.1/tr1/poly_hermite.tcc \
  /usr/include/c++/14.1.1/tr1/poly_laguerre.tcc \
  /usr/include/c++/14.1.1/tr1/riemann_zeta.tcc \
- /usr/include/c++/14.1.1/fstream /usr/include/c++/14.1.1/bits/codecvt.h \
- /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/basic_file.h \
- /usr/include/c++/14.1.1/x86_64-pc-linux-gnu/bits/c++io.h \
- /usr/include/c++/14.1.1/bits/fstream.tcc \
  /usr/include/c++/14.1.1/functional \
  /usr/include/c++/14.1.1/bits/std_function.h \
  /usr/include/c++/14.1.1/unordered_map \

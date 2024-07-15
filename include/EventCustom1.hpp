@@ -18,10 +18,10 @@ class EventCustom : public Event {
   EeventType m_eventType{};                               //!< тип текушего события
   uint64_t m_endTime{0};                                  //!< длительность события EXCHANGE
   uint64_t m_cyclePeriodSec{0};                           //!< частота перезахода в событие EXCHANGE
-  /**
-   * @brief логика события при входе по времени
-   *
-   */
+                                                          /**
+                                                           * @brief логика события при входе по времени
+                                                           *
+                                                           */
   void logicInTime() {
     if (m_eventType == EeventType::EXCHANGE) {
       m_sendActions.emplace_back(m_ActionsOut.at(0));
@@ -36,7 +36,7 @@ class EventCustom : public Event {
       (*(m_spActionsOut))[0]->m_sendCommand.m_packet[m_wordNumber] = this->m_value;
       m_pActionInTime->m_isActive = false;
       m_pActionInTime->m_status = Action::EStatus::closed;
-    };
+    }
   }
   /**
    * @brief логика события при входе через интерфейс
@@ -46,7 +46,7 @@ class EventCustom : public Event {
     for (auto& action : m_actions) {
       if (action->m_isActive == true) {
         std::cout << std::endl;
-        for (size_t i = 0; i < action->m_pLastCommand.m_packet.size(); i++) {
+        for (std::size_t i = 0; i < action->m_pLastCommand.m_packet.size(); i++) {
           std::printf("%x", action->m_pLastCommand.m_packet[i]);
         }
         std::cout << std::endl;
@@ -77,7 +77,7 @@ class EventCustom : public Event {
       m_spActionsOut = &this->m_ActionsOut;
       m_actions[0]->m_status = Action::EStatus::open;
       m_ActionsOut[0]->m_sendCommand.m_packet.resize(m_pEventRaw->m_parameters["ARRAY"].size());
-      for (size_t i = 0; i < m_pEventRaw->m_parameters["ARRAY"].size(); i++) {
+      for (std::size_t i = 0; i < m_pEventRaw->m_parameters["ARRAY"].size(); i++) {
         m_ActionsOut[0]->m_sendCommand.m_packet[i] = std::stoi(m_pEventRaw->m_parameters["ARRAY"][i], nullptr, 16);
       }
       m_endTime = std::stoul(this->m_pEventRaw->m_parameters["TIME"][0]) * 1000000000;

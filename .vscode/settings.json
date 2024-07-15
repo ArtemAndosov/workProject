@@ -70,7 +70,8 @@
         "codecvt": "cpp",
         "bitset": "cpp",
         "regex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "set": "cpp"
     },
     "editor.tokenColorCustomizations": {
         "comments": "",
