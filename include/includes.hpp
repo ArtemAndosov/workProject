@@ -1,5 +1,6 @@
 #pragma once
 
+#include <catch2/catch_test_macros.hpp>
 #include <chrono>
 #include <ctime>
 #include <fstream>
@@ -14,6 +15,9 @@
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
+
+
+
 uint64_t programmStartTime_ns = std::chrono::nanoseconds(std::chrono::system_clock::now().time_since_epoch()).count();  //!< время старта программы
 enum class g_EInterfaceType : uint8_t { ERROR, COM, MAC, UDP, TIME };                                                   //!< виды интерфейсов(типы входа)
 

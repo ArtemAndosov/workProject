@@ -22,7 +22,7 @@ class EventCustom : public Event {
     for (auto& action : m_actions) {
       if (action->m_isActive == true) {
         std::printf("\nReceived packet: ");  //!< при получении принтуем пакет и счетчик ошибок
-        for (size_t i = 0; i < action->m_pLastCommand.m_packet.size(); i++) {
+        for (std::size_t i = 0; i < action->m_pLastCommand.m_packet.size(); i++) {
           std::printf("0x%X,", action->m_pLastCommand.m_packet[i]);
         }
         std::printf("\nm_errorCounter: %d\n", m_errorCounter);
@@ -82,7 +82,7 @@ class EventCustom : public Event {
    * @return T контрольная сумма
    */
   template <typename T>
-  T CRC8(T* data, size_t length_bytes) {
+  T CRC8(T* data, std::size_t length_bytes) {
     T crc = 0x00;
     T extract;
     T sum;
@@ -146,5 +146,6 @@ class EventCustom : public Event {
    * @brief Destroy the Event object
    *
    */
+
   ~EventCustom() = default;
 };

@@ -84,7 +84,7 @@ int main() {
 
 void parseTable(std::vector<eventRaw>& Raw) {
   rapidcsv::Document doc("../csv/events.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++) {
+  for (std::size_t i = 0; i < doc.GetRowCount(); i++) {
     Raw.emplace_back();
     std::string name = doc.GetCell<std::string>("name", i);
     Raw[i].m_eventName = name;
@@ -94,7 +94,7 @@ void parseTable(std::vector<eventRaw>& Raw) {
     Raw[i].m_parametersName = parameters;
   }
   rapidcsv::Document parametersEv("../csv/paramEv.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < parametersEv.GetRowCount(); i++) {
+  for (std::size_t i = 0; i < parametersEv.GetRowCount(); i++) {
     std::string json = parametersEv.GetCell<std::string>("parameters", i);
     std::string parameters = parametersEv.GetCell<std::string>("name", i);
     rapidjson::Document d;
@@ -113,7 +113,7 @@ void parseTable(std::vector<eventRaw>& Raw) {
               event.m_parameters.emplace(itr->name.GetString(), vec);
               break;
             case 4: {
-              for (size_t i = 0; i < itr->value.Size(); i++)
+              for (std::size_t i = 0; i < itr->value.Size(); i++)
                 vec.push_back(itr->value[i].GetString());
               event.m_parameters.emplace(itr->name.GetString(), vec);
             } break;
@@ -128,7 +128,7 @@ void parseTable(std::vector<eventRaw>& Raw) {
 
 void parseTable(std::vector<deviceRaw>& Raw) {
   rapidcsv::Document doc("../csv/devices.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++) {
+  for (std::size_t i = 0; i < doc.GetRowCount(); i++) {
     Raw.emplace_back();
     std::string name = doc.GetCell<std::string>("name", i);
     Raw[i].m_deviceName = name;
@@ -144,7 +144,7 @@ void parseTable(std::vector<deviceRaw>& Raw) {
 
 void parseTable(std::vector<hardwareRaw>& Raw) {
   rapidcsv::Document doc("../csv/hardware.csv", rapidcsv::LabelParams(0, -1));
-  for (size_t i = 0; i < doc.GetRowCount(); i++) {
+  for (std::size_t i = 0; i < doc.GetRowCount(); i++) {
     Raw.emplace_back();
     std::string eventName = doc.GetCell<std::string>("commandName", i);
     Raw[i].m_eventName = eventName;
@@ -181,19 +181,19 @@ void LoadConfig() {
   }
   // создали девайсы
 
-  for (size_t i = 0; i < deviceRaws.size(); i++) {
+  for (std::size_t i = 0; i < deviceRaws.size(); i++) {
     devices.emplace_back(deviceRaws[i]);
     devices[i].m_pQueue = &queue;
     devices[i].m_pQueueMutex = &queueMutex;
   }
   // запускаем девайсы
-  for (size_t i = 0; i < devices.size(); i++) {
+  for (std::size_t i = 0; i < devices.size(); i++) {
     devices[i].listen();
   }
 
   // создали ActionIn и ActionOut
   // не работает если у девайсов одинаковые имена
-  for (size_t i = 0; i < hardWares.size(); i++) {
+  for (std::size_t i = 0; i < hardWares.size(); i++) {
     if (hardWares[i].m_direction == "upload")
       actionsIn.emplace_back(ActionIn<HardCommand>(hardWares.at(i)));
     else if (hardWares[i].m_direction == "download")
@@ -215,16 +215,16 @@ void LoadConfig() {
     }
   }
   // создали эвенты
-  for (size_t i = 0; i < eventRaws.size(); i++) {
+  for (std::size_t i = 0; i < eventRaws.size(); i++) {
     events.emplace_back(EventCustom(eventRaws[i]));
     events[i].m_eventID = i;
   }
 
   // создали actionsInTime
-  for (size_t i = 0; i < events.size(); i++) {
+  for (std::size_t i = 0; i < events.size(); i++) {
     actionsInTime.emplace_back();
   }
-  for (size_t i = 0; i < events.size(); i++) {
+  for (std::size_t i = 0; i < events.size(); i++) {
     events[i].m_pActionInTime = &actionsInTime[i];
     actionsInTime[i].m_eventID = i;
     actionsInTime[i].m_status = Action::EStatus::open;
@@ -232,7 +232,7 @@ void LoadConfig() {
     actionsInTime[i].m_timeStart_ns = events[i].m_pEventRaw->m_timeStart * 1000000000;
   }
   // ссвязали ActionIn и эвенты
-  for (size_t i = 0; i < actionsIn.size(); i++) {
+  for (std::size_t i = 0; i < actionsIn.size(); i++) {
     for (auto& event : events) {
       if (actionsIn[i].m_eventName == event.m_name) {
         event.m_actions.emplace_back(&actionsIn[i]);
@@ -241,7 +241,7 @@ void LoadConfig() {
     }
   }
   // ссвязали ActionOut и эвенты
-  for (size_t i = 0; i < actionsOut.size(); i++) {
+  for (std::size_t i = 0; i < actionsOut.size(); i++) {
     for (auto& event : events) {
       if (actionsOut[i].m_eventName == event.m_name) {
         event.m_ActionsOut.emplace_back(&actionsOut[i]);
@@ -300,11 +300,11 @@ void parsePacket(const std::string fileName) {
   Fb.seekg(0, std::ios::beg);
 
   deviceRaws[0].m_packet.resize(fileSize / 11);
-  for (size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
+  for (std::size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
     deviceRaws[0].m_packet[i].resize(11);
   }
 
-  for (size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
+  for (std::size_t i = 0; i < deviceRaws[0].m_packet.size(); i++) {
     Fb.read((char*)&(deviceRaws[0].m_packet[i][0]), 11);
   }
   Fb.close();

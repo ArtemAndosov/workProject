@@ -20,6 +20,12 @@
             "problemMatcher": []
         },
         {
+            "label": "[Arch Linux] clear & build & run unit_test",
+            "type": "shell",
+            "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; cmake ..; cmake --build . -- -j8; ./unit_test; fi;",
+            "problemMatcher": []
+        },
+        {
             "label": "[Arch Linux] clear build",
             "type": "shell",
             "command": "if [[ ! -n $(find . -name 'build') ]]; then mkdir -v build; fi; if [[ ! -n $(find . -name 'build') ]]; then echo 'can not create directory'; else cd build/; find . -not -name '.gitignore' -delete; fi;",

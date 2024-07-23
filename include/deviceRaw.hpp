@@ -5,8 +5,7 @@
  *
  */
 struct deviceRaw {
-  //!< вектор предзаданых пакетов
-  std::vector<std::vector<uint8_t>> m_packet{};
+  std::vector<std::vector<uint8_t>> m_packet{};           //!< вектор предзаданых пакетов
   int m_port;                                             //!< не используется
   std::string m_path;                                     //!< не используется
   std::string m_deviceName;                               //!< Имя девайса
