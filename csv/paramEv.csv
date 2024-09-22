@@ -1,2 +1,2 @@
 name,parameters
-testParamEv1,"{"MODE":"EXCHANGE", "CYCLE_PERIOD_S":"2", "ARRAY":["FF","FF","FF","FF","FF"], "TIME":"20"}"
+testParamEv1,"{"DstId":["1","2","3"]}"

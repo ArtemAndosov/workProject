@@ -13,6 +13,7 @@ std::vector<hardwareRaw> hardWares;            //!< список исходни�
 std::vector<ActionIn<HardCommand>> actionsIn;  //!< список action для входа по интерфейсу
 std::vector<ActionInTime> actionsInTime;       //!< список action для входа по времени
 std::vector<ActionOut> actionsOut;             //!< список action для выхода
+std::vector<ActionOutEvent> actionsOutEvent;   //!< список action для выхода в дочернее событие
 /**
  * @brief парсинг событий и их параметров из .csv
  *
@@ -67,10 +68,10 @@ void thrTime();
 
 int main() {
   LoadConfig();
-
   for (auto& ev : events) {
     ev.setupPlugin();
   }
+
   std::thread start(thr);
   start.detach();
   std::thread startInTime(thrTime);
@@ -130,14 +131,10 @@ void parseTable(std::vector<deviceRaw>& Raw) {
   rapidcsv::Document doc("../csv/devices.csv", rapidcsv::LabelParams(0, -1));
   for (std::size_t i = 0; i < doc.GetRowCount(); i++) {
     Raw.emplace_back();
-    std::string name = doc.GetCell<std::string>("name", i);
-    Raw[i].m_deviceName = name;
-    std::string interface = doc.GetCell<std::string>("interface", i);
-    Raw[i].m_interface = StringToEnum[interface];
-    std::string path = doc.GetCell<std::string>("path", i);
-    Raw[i].m_path = path;
-    int port = doc.GetCell<int>("port", i);
-    Raw[i].m_port = port;
+    Raw[i].m_deviceName = doc.GetCell<std::string>("name", i);
+    Raw[i].m_interface = StringToEnum[doc.GetCell<std::string>("interface", i)];
+    Raw[i].m_path = doc.GetCell<std::string>("path", i);
+    Raw[i].m_port = doc.GetCell<int>("port", i);
   };
   parsePacket("../csv/Ff.dat");
 }
@@ -152,8 +149,8 @@ void parseTable(std::vector<hardwareRaw>& Raw) {
     Raw[i].m_deviceName = device;
     std::string port = doc.GetCell<std::string>("port", i);
     Raw[i].m_port = port;
-    std::string address = doc.GetCell<std::string>("address", i);
-    Raw[i].m_address = address;
+    std::string type = doc.GetCell<std::string>("type", i);
+    Raw[i].m_type = type;
     std::string parameters = doc.GetCell<std::string>("parameters", i);
     Raw[i].m_parameters = parameters;
     std::string direction = doc.GetCell<std::string>("direction", i);
@@ -170,8 +167,8 @@ void LoadConfig() {
 
   // заполняем hardwareRaw
   parseTable(hardWares);
-
   //
+
   for (auto& h : hardWares) {
     for (auto& d : deviceRaws) {
       if (h.m_deviceName == d.m_deviceName) {
@@ -191,13 +188,17 @@ void LoadConfig() {
     devices[i].listen();
   }
 
-  // создали ActionIn и ActionOut
+  // создали ActionIn , ActionOut и ActionOutEvent
   // не работает если у девайсов одинаковые имена
   for (std::size_t i = 0; i < hardWares.size(); i++) {
     if (hardWares[i].m_direction == "upload")
       actionsIn.emplace_back(ActionIn<HardCommand>(hardWares.at(i)));
-    else if (hardWares[i].m_direction == "download")
+    else if (hardWares[i].m_direction == "download") {
+      if (hardWares[i].m_type == "event") {
+        actionsOutEvent.emplace_back(ActionOutEvent(hardWares.at(i)));
+      }
       actionsOut.emplace_back(ActionOut(hardWares.at(i)));
+    }
   }
 
   // связали ActionIn и Девайс
@@ -249,6 +250,19 @@ void LoadConfig() {
       }
     }
   }
+  // ссвязали ActionOutEvent и эвенты
+  for (std::size_t i = 0; i < actionsOutEvent.size(); i++) {
+    for (auto& event : events) {
+      if (actionsOutEvent[i].m_eventName == event.m_name) {
+        event.m_ActionsOutEvent.emplace_back(&actionsOutEvent[i]);
+        actionsOutEvent[i].m_eventID = event.m_eventID;
+        event.m_ActionsOutEvent[0]->m_DstId.resize(event.m_pEventRaw->m_parameters["DstId"].size());
+        for (std::size_t i = 0; i < event.m_pEventRaw->m_parameters["DstId"].size(); i++) {
+          event.m_ActionsOutEvent[0]->m_DstId[i] = std::stoi(event.m_pEventRaw->m_parameters["DstId"][i], nullptr, 10);
+        }
+      }
+    }
+  }
 }
 
 void thr()  // поехал основной процесс интерфейса в потоке
@@ -287,8 +301,12 @@ void thrTime()  // поехал основной процесс по време�
 }
 
 void thrReactions(std::vector<ActionOut*>* result) {
-  for (auto& i : *result) {
-    i->sendData();
+  for (auto& ActOut : *result) {
+    if (ActOut->m_interface == g_EInterfaceType::EVENT) {
+      for (auto& Id : events[ActOut->m_eventID].m_ActionsOutEvent[0]->m_DstId)
+        events[Id].setData();
+    }
+    ActOut->sendData();
   }
 }
 

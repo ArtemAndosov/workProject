@@ -1,3 +1,3 @@
-add_test( [==[Scenario: setupPlugin test]==] /home/artem/workspace/tasks/build/unit_test [==[Scenario: setupPlugin test]==]  )
-set_tests_properties( [==[Scenario: setupPlugin test]==] PROPERTIES WORKING_DIRECTORY /home/artem/workspace/tasks/build)
-set( unit_test_TESTS [==[Scenario: setupPlugin test]==])
+add_test( [==[задача 2]==] /home/artem/workspace/tasks/build/unit_test [==[задача 2]==]  )
+set_tests_properties( [==[задача 2]==] PROPERTIES WORKING_DIRECTORY /home/artem/workspace/tasks/build)
+set( unit_test_TESTS [==[задача 2]==])

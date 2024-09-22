@@ -71,7 +71,12 @@
         "bitset": "cpp",
         "regex": "cpp",
         "valarray": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "strstream": "cpp",
+        "complex": "cpp",
+        "source_location": "cpp",
+        "shared_mutex": "cpp",
+        "typeindex": "cpp"
     },
     "editor.tokenColorCustomizations": {
         "comments": "",

@@ -32,5 +32,6 @@ class ActionOut : public Action {
    * @brief Destroy the Action Out object
    *
    */
+  ActionOut() = default;
   ~ActionOut() = default;
 };

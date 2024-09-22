@@ -1,2 +1,5 @@
 name,timeStart,parameters
 testEvent1,0,testParamEv1
+testEvent2,0,testParamEv1
+testEvent3,0,testParamEv1
+testEvent4,0,testParamEv1

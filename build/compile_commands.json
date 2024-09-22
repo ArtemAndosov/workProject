@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/artem/workspace/tasks/build",
+  "command": "/bin/c++  -I/home/artem/workspace/tasks/include -g   -O3 -Wall -pedantic -fPIC -c -W -std=c++17 -o CMakeFiles/start.dir/main.cpp.o -c /home/artem/workspace/tasks/main.cpp",
+  "file": "/home/artem/workspace/tasks/main.cpp",
+  "output": "CMakeFiles/start.dir/main.cpp.o"
+},
+{
+  "directory": "/home/artem/workspace/tasks/build",
+  "command": "/bin/c++  -I/home/artem/workspace/tasks/include -g   -O3 -Wall -pedantic -fPIC -c -W -std=c++17 -o CMakeFiles/unit_test.dir/tests/EventCustomTest.cpp.o -c /home/artem/workspace/tasks/tests/EventCustomTest.cpp",
+  "file": "/home/artem/workspace/tasks/tests/EventCustomTest.cpp",
+  "output": "CMakeFiles/unit_test.dir/tests/EventCustomTest.cpp.o"
+}
+]

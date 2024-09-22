@@ -16,15 +16,13 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 
-
-
 uint64_t programmStartTime_ns = std::chrono::nanoseconds(std::chrono::system_clock::now().time_since_epoch()).count();  //!< время старта программы
-enum class g_EInterfaceType : uint8_t { ERROR, COM, MAC, UDP, TIME };                                                   //!< виды интерфейсов(типы входа)
+enum class g_EInterfaceType : uint8_t { ERROR, COM, MAC, EVENT, TIME };                                                 //!< виды интерфейсов(типы входа)
 
 std::map<std::string, g_EInterfaceType> StringToEnum{{"ERROR", g_EInterfaceType::ERROR},  //!< карта типов интерфейсов
                                                      {"COM", g_EInterfaceType::COM},
                                                      {"MAC", g_EInterfaceType::MAC},
-                                                     {"UDP", g_EInterfaceType::UDP},
+                                                     {"UDP", g_EInterfaceType::EVENT},
                                                      {"TIME", g_EInterfaceType::TIME}};
 
 /**

@@ -18,10 +18,11 @@ class EventCustom : public Event {
   EeventType m_eventType{};                               //!< тип текушего события
   uint64_t m_endTime{0};                                  //!< длительность события EXCHANGE
   uint64_t m_cyclePeriodSec{0};                           //!< частота перезахода в событие EXCHANGE
-                                                          /**
-                                                           * @brief логика события при входе по времени
-                                                           *
-                                                           */
+
+  /**
+   * @brief логика события при входе по времени
+   *
+   */
   void logicInTime() {
     if (m_eventType == EeventType::EXCHANGE) {
       m_sendActions.emplace_back(m_ActionsOut.at(0));

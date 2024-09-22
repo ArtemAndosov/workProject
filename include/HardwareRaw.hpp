@@ -12,6 +12,7 @@ struct hardwareRaw {
   std::string m_address;     //!< не используется
   std::string m_port;        //!< не используется
   std::string m_parameters;  //!< не используется
+  std::string m_type;        //!< определяет выход в другое событие или нет
   deviceRaw* m_pDeviceRaw;   //!< Указатель на класс с исходными данными для связанного девайса
   /**
    * @brief Construct a new hardware Raw object
